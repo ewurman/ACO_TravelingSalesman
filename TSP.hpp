@@ -21,6 +21,8 @@ class TSP {
         vector<City> cities;
         // Do we need something to represent Edges, for pheremones later?
         TSP();
+        TSP(char* fileName);
+        parseFileForCities(char* filename);
 }
 
 #endif
