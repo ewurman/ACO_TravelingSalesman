@@ -8,8 +8,9 @@
 #include <sstream>
 #include <iostream>
 
-string COORD_DISPLAY = "COORD_DISPLAY";
-string DISPLAY_DATA_TYPE = "DISPLAY_DATA_TYPE: ";
+string EUC_2D = "EUC_2D";
+string EDGE_WEIGHT_TYPE = "EDGE_WEIGHT_TYPE : ";
+string NODE_COORD_SECTION = "NODE_COORD_SECTION";
 
 
 TSP::TSP(){
@@ -26,29 +27,49 @@ vector<City> TSP::parseFileForCities(char* filename){
     ifstream infile(filename);
     string line;
     bool foundFormatType = false;
+    bool foundNodeCoordSection = false;
     vector<City> cities;
     while (getline(infile, line)) {
 
         if (!strcmp(line.substr(0,3),"EOF")){
             return cities;
         }
-        //DISPLAY_DATA_TYPE: COORD_DISPLAY is the line we want
-        int dataType = line.find(DISPLAY_DATA_TYPE);
+        // EDGE_WEIGHT_TYPE : EUC_2D is the line we want
+        // then NODE_COORD_SECTION
+        int dataType = line.find(EDGE_WEIGHT_TYPE);
         if (dataType != std::string::npos){
             string type = line.substr(dataType);
-            if (!strcmp(type, COORD_DISPLAY)){
+            if (!strcmp(type, EUC_2D)){
                 foundFormatType = true;
             }
             else {
-                cout << "Error: Wrong DISPLAY_DATA_TYPE for file " << filename << endl;
+                cout << "Error: Wrong EDGE_WEIGHT_TYPE for file " << filename << endl;
                 return cities;
             }
         }
-        if (foundFormatType) {
-            firstNum = line.find_first_not_of(" ");
+
+        if (foundFormatType){
+            int nodeSection = line.find(NODE_COORD_SECTION);
+            if (nodeSection != std::string::npos){
+                string startOfLine = line.substr(nodeSection, NODE_COORD_SECTION.length());
+                if (!strcmp(startOfLine, NODE_COORD_SECTION)){
+                    foundNodeCoordSection = true;
+                }
+            }
+        }   
+
+        if (foundNodeCoordSection) {
+            int firstNum = line.find_first_not_of(" ");
             line = line.substr(firstNum);
-            firstspace = line.find(" ");
-            //subline = subline.substr(space);
+            int firstspace = line.find(" "); 
+            // skip city num?
+            int cityNum = stoi(line.substr(0,firstspace));
+
+
+            line = line.substr(space);
+            int firstCoor = line.find_first_not_of(" ");
+            line = line.substr(firstCoor);
+            // Now we should only have firstCoor space secondCoor as the line
         }
     }
 }
