@@ -1,11 +1,11 @@
 
-#ifndef ACO_HPP
-#define ACO_HPP
+#ifndef ELITIST_HPP
+#define ELITIST_HPP
 
 #include <vector>
-#include "utils.cpp"
-#include "TSP.hpp"
+#include "ACO.hpp"
 
+/*
 public class ACO {
 
     private:
@@ -23,8 +23,11 @@ public class ACO {
         ACO();
 
 }
+*/
 
 class Elitist : ACO {
+    private:
+        double elitismFactor;
 
 }
 

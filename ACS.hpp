@@ -9,6 +9,36 @@
 #ifndef ACS_hpp
 #define ACS_hpp
 
+/*
+public class ACO {
+
+    private:
+        TSP tsp; // holds the cities
+        int numAnts;
+        int maxIterations;
+        double alpha; //influence of pheremones
+        double beta;  //influence of heuristic (distance)
+        double rho; //evaporationFactor
+
+    public:
+        
+        double** pheremones
+        double** dinstances
+        ACO();
+
+}
+*/
+
+
+class ACS : ACO {
+    private:
+        double epsilon; //wear away factor
+        double tau_naught; // Minimum pheremone concentration
+        double q_naught; // probability of choosing greedily next leg
+
+}
+
+
 #include <stdio.h>
 
 #endif /* ACS_hpp */
