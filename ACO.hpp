@@ -24,8 +24,5 @@ public class ACO {
 
 }
 
-class Elitist : ACO {
-
-}
 
 #endif
