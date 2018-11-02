@@ -13,7 +13,8 @@ class ACO {
 
     public:
         
-        // Do we need something to represent Edges, for pheremones?
+        double** pheremones
+        double** dinstances
         ACO();
 }
 
