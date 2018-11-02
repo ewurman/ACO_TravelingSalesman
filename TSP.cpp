@@ -31,7 +31,7 @@ vector<City> TSP::parseFileForCities(char* filename){
     string line;
     bool foundFormatType = false;
     vector<City> cities;
-    while (getline(infile, line)) {
+    while (getline(infile, line)) { 
 
         //if (!strncmp(line.substr(0,3),"EOF")){
         if (!line.substr(0,3).compare("EOF")) {
@@ -57,4 +57,5 @@ vector<City> TSP::parseFileForCities(char* filename){
             //subline = subline.substr(space);
         }
     }
+    return cities;
 }
