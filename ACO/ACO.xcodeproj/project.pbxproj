@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D2131A3218CBF4100858D22 /* Elitist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D2131A1218CBF4100858D22 /* Elitist.cpp */; };
 		6D9F723E218B49AD00D02E62 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D9F723D218B49AD00D02E62 /* main.cpp */; };
 		6D9F724A218B533F00D02E62 /* TSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D9F7245218B533E00D02E62 /* TSP.cpp */; };
 		6D9F724B218B533F00D02E62 /* ACO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D9F7246218B533E00D02E62 /* ACO.cpp */; };
@@ -27,6 +28,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6D2131A1218CBF4100858D22 /* Elitist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Elitist.cpp; path = ../../Elitist.cpp; sourceTree = "<group>"; };
+		6D2131A2218CBF4100858D22 /* Elitist.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Elitist.hpp; path = ../../Elitist.hpp; sourceTree = "<group>"; };
 		6D9F723A218B49AD00D02E62 /* ACO */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ACO; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D9F723D218B49AD00D02E62 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6D9F7244218B533E00D02E62 /* ACO.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ACO.hpp; path = ../../ACO.hpp; sourceTree = "<group>"; };
@@ -75,6 +78,8 @@
 				6D9F724F218BD78000D02E62 /* ACS.hpp */,
 				6D9F7246218B533E00D02E62 /* ACO.cpp */,
 				6D9F7244218B533E00D02E62 /* ACO.hpp */,
+				6D2131A1218CBF4100858D22 /* Elitist.cpp */,
+				6D2131A2218CBF4100858D22 /* Elitist.hpp */,
 				6D9F7247218B533F00D02E62 /* README.md */,
 				6D9F7245218B533E00D02E62 /* TSP.cpp */,
 				6D9F7249218B533F00D02E62 /* TSP.hpp */,
@@ -140,6 +145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D2131A3218CBF4100858D22 /* Elitist.cpp in Sources */,
 				6D9F724B218B533F00D02E62 /* ACO.cpp in Sources */,
 				6D9F723E218B49AD00D02E62 /* main.cpp in Sources */,
 				6D9F724A218B533F00D02E62 /* TSP.cpp in Sources */,
