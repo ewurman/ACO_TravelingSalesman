@@ -10,7 +10,7 @@ class ACO {
 
     private:
         TSP tsp; // holds the cities
-        int numAnts;
+        int numAnts; //30-50 seems like a good idea
         int maxIterations;
         double alpha; //influence of pheremones
         double beta;  //influence of heuristic (distance)
