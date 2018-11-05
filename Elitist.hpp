@@ -29,6 +29,6 @@ class Elitist : ACO {
     private:
         double elitismFactor;
 
-}
+};
 
 #endif

@@ -9,7 +9,7 @@
 #define TSP_hpp
 
 #include <vector>
-#include <string>
+#include <string.h>
 #include "utils.cpp"
 
 using namespace std;
@@ -25,7 +25,9 @@ class TSP {
         // Do we need something to represent Edges, for pheremones later?
         TSP();
         TSP(string fileName);
-        vector<City> parseFileForCities(char* filename);
+        vector<City> parseFileForCities(string filename);
+
+        void printCities();
 };
 
 #endif

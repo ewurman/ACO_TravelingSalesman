@@ -21,7 +21,7 @@ typedef struct City {
     }
 
     double operator== (const City &rightCity) const {
-        return id == rightCity.id && x = rightCity.x && y == rightCity.y;
+        return id == rightCity.id && x == rightCity.x && y == rightCity.y;
     }
 
 

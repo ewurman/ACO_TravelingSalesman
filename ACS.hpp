@@ -9,6 +9,8 @@
 #ifndef ACS_hpp
 #define ACS_hpp
 
+#include "ACO.hpp"
+
 /*
 public class ACO {
 
@@ -36,7 +38,7 @@ class ACS : ACO {
         double tau_naught; // Minimum pheremone concentration
         double q_naught; // probability of choosing greedily next leg
 
-}
+};
 
 
 #include <stdio.h>

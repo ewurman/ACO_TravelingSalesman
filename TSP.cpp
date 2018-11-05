@@ -7,14 +7,15 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <string>
+#include <string.h>
 #include <stdio.h>
 
 using namespace std;
 
 string EUC_2D = "EUC_2D";
-string EDGE_WEIGHT_TYPE = "EDGE_WEIGHT_TYPE : ";
+string EDGE_WEIGHT_TYPE = "EDGE_WEIGHT_TYPE";
 string NODE_COORD_SECTION = "NODE_COORD_SECTION";
+bool DEBUG_ON = true;
 
 
 TSP::TSP(){
@@ -25,9 +26,11 @@ TSP::TSP(){
 
 TSP::TSP(string filename) {
     //validate the file
+    this->cities = parseFileForCities(filename);
+    this->numCities = cities.size();
 }
 
-vector<City> TSP::parseFileForCities(char* filename){
+vector<City> TSP::parseFileForCities(string filename){
     ifstream infile(filename);
     string line;
     bool foundFormatType = false;
@@ -35,7 +38,6 @@ vector<City> TSP::parseFileForCities(char* filename){
     vector<City> cities;
     while (getline(infile, line)) { 
 
-        //if (!strncmp(line.substr(0,3),"EOF")){
         if (!line.substr(0,3).compare("EOF")) {
             return cities;
         }
@@ -43,25 +45,24 @@ vector<City> TSP::parseFileForCities(char* filename){
         // then NODE_COORD_SECTION
         int dataType = line.find(EDGE_WEIGHT_TYPE);
         if (dataType != std::string::npos){
-            string type = line.substr(dataType);
-            if (!strcmp(type, EUC_2D)){
+            if (DEBUG_ON)
+                cout << line << endl;
+
+            line = line.substr(dataType + EDGE_WEIGHT_TYPE.length());
+            size_t typeIndex = line.find_first_not_of(" :");
+            string type = line.substr(typeIndex);
+            if (DEBUG_ON)
+                cout << type <<endl;
+            if (!type.compare(EUC_2D)){
                 foundFormatType = true;
+                if (DEBUG_ON)
+                    cout << "Yay! found the correct Format Type line" << endl;
             }
             else {
                 cout << "Error: Wrong EDGE_WEIGHT_TYPE for file " << filename << endl;
                 return cities;
             }
         }
-
-        if (foundFormatType){
-            int nodeSection = line.find(NODE_COORD_SECTION);
-            if (nodeSection != std::string::npos){
-                string startOfLine = line.substr(nodeSection, NODE_COORD_SECTION.length());
-                if (!strcmp(startOfLine, NODE_COORD_SECTION)){
-                    foundNodeCoordSection = true;
-                }
-            }
-        }   
 
         if (foundNodeCoordSection) {
             size_t firstNum = line.find_first_not_of(" ");
@@ -71,12 +72,52 @@ vector<City> TSP::parseFileForCities(char* filename){
             int cityNum = stoi(line.substr(0,firstspace));
 
 
-            line = line.substr(space);
+            line = line.substr(firstspace);
             int firstCoor = line.find_first_not_of(" ");
             line = line.substr(firstCoor);
             // Now we should only have firstCoor space secondCoor as the line
 
+            size_t spaceBetween = line.find(" ");
+            double xCoor = stod(line.substr(0,spaceBetween));
+
+            line = line.substr(spaceBetween);
+            double yCoor = stod(line);
+
+            City newCity;
+            newCity.id = cityNum;
+            newCity.x = xCoor;
+            newCity.y = yCoor;
+            cities.push_back(newCity);
         }
+
+
+        if (foundFormatType){
+            int nodeSection = line.find(NODE_COORD_SECTION);
+            if (nodeSection != std::string::npos){
+                if (DEBUG_ON)
+                    cout << line << endl;
+                string startOfLine = line.substr(nodeSection, NODE_COORD_SECTION.length());
+                if (!startOfLine.compare(NODE_COORD_SECTION)){
+                    foundNodeCoordSection = true;
+                    if (DEBUG_ON)
+                        cout << "Found the Node Coord Section" <<endl;
+                }
+            }
+        }   
+
     }
     return cities;
 }
+
+
+
+
+void TSP::printCities(){
+    cout << "There are " << this->numCities << " cities" << endl;
+    for (int i = 0; i < this->numCities; i++){     
+        cout << "City " << this->cities[i].id << " at " << this->cities[i].x << ", " << this->cities[i].y << endl;
+    }
+}
+
+
+
