@@ -35,19 +35,19 @@ using namespace std;
 
 class ACS {
     private:
+        double alpha;
+        double beta;
         int num_cities; // not sure best way to access this
+    
         double epsilon; //wear away factor
         double tau_naught; // Minimum pheremone concentration
         double q_naught; // probability of choosing greedily next leg
         void run_tour(char** dist, char** pheromones);
         int select_next(int curr_id);
-        int greedy_selection(int curr_city);
-        int prob_selection(int curr_city);
-    
-    
+        int greedy_selection(int curr_city, vector<int> cities_remaining, char** dist, char** pheromones);
+        int prob_selection(int curr_city, vector<int> cities_remaining, char** dist, char** pheromones);
+    double sum_options(int curr_city, vector<int> cities_remaining, char** dist, char** pheromones);
     public:
-        double max_TauEta(int city_id);
-
 };
 
 
