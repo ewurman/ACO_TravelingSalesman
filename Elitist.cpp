@@ -3,6 +3,18 @@
 #include "Elitist.hpp"
 #include <vector>
 
+
+
+
+Elitist::Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor)
+: ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho){
+    this->elitismFactor = elitismFactor;
+}
+
+
+
+
+
 // ******************************************************************************************
 // ****** Boltzmann Selection
 // ******************************************************************************************

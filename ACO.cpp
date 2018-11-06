@@ -18,3 +18,14 @@ select_next_city(currentCity, cities_left vector):
 
 
 */
+
+ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho){
+    this->tsp = tsp;
+    this->numAnts = numAnts;
+    this->maxIterations = maxIterations;
+    this->alpha = alpha;
+    this->beta = beta;
+    this->rho = rho;
+}
+
+

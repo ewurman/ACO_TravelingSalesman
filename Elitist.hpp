@@ -29,6 +29,7 @@ class Elitist : ACO {
     private:
         double elitismFactor;
     public:
+        Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor);
         
 };
 

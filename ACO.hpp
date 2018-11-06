@@ -20,7 +20,7 @@ class ACO {
         
         double** pheremones;
         double** dinstances;
-        ACO();
+        ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho);
 
         /*
         int select_next_city(currentCity, cities_left vector):  
