@@ -17,11 +17,11 @@ using namespace std;
 class TSP {
 
     private:
-        int numCities;
 
 
     public:
         vector<City> cities;
+        int numCities;
         // Do we need something to represent Edges, for pheremones later?
         TSP();
         TSP(string fileName);
