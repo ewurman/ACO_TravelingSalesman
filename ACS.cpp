@@ -22,8 +22,10 @@ vector<int> city_ids(int num_cities) {
 
 void ACS::run_tour(char** dist, char** pheromones) {
     vector<int> cities_remaining = city_ids(this->tsp.numCities); // create vect of city ids
+    vector<int> tour;
     int next_city = -1;
-    int curr_city = rand() % this->;
+    int curr_city = rand() % this->tsp.numCities;
+    tour.push_back(curr_city);
     while (cities_remaining.size() >= 0) {
         double r = (double)rand() / RAND_MAX;
         if (r < this->q_naught) {
@@ -31,7 +33,9 @@ void ACS::run_tour(char** dist, char** pheromones) {
         } else {
             next_city = prob_selection(curr_city, cities_remaining, dist, pheromones);
         }
+        tour.push_back(next_city);
     }
+    
 }
 
 int ACS::greedy_selection(int curr_city, vector<int> cities_remaining, char** dist, char** pheromones) {
@@ -64,8 +68,8 @@ double ACS::sum_options(int curr_city, vector<int> cities_remaining, char** dist
 int ACS::prob_selection(int curr_city, vector<int> cities_remaining, char** dist, char** pheromones) {
     vector<pair<int, double>> probabilities;
     vector<double> bounds;
-    double sum = sum_options(curr_city, cities_remaining, dist, pheromones);
     for (int i = 0; i < cities_remaining.size(); i++) {
+        double sum = sum_options(curr_city, cities_remaining, dist, pheromones);
         double tau = pheromones[curr_city][cities_remaining[i]];
         double distance = dist[curr_city][cities_remaining[i]];
         double eta = 1/distance;
@@ -89,4 +93,6 @@ int ACS::prob_selection(int curr_city, vector<int> cities_remaining, char** dist
     return probabilities[0].second; // shouldnt get here
 }
 
-
+//to do
+// pheromone update rules
+// 
