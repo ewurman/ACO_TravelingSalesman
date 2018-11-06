@@ -33,12 +33,9 @@ public class ACO {
 */
 using namespace std;
 
-class ACS {
+class ACS : ACO {
     private:
-        double alpha;
-        double beta;
-        int num_cities; // not sure best way to access this
-    
+
         double epsilon; //wear away factor
         double tau_naught; // Minimum pheremone concentration
         double q_naught; // probability of choosing greedily next leg

@@ -21,9 +21,9 @@ vector<int> city_ids(int num_cities) {
 
 
 void ACS::run_tour(char** dist, char** pheromones) {
-    vector<int> cities_remaining = city_ids(this->num_cities); // create vect of city ids
+    vector<int> cities_remaining = city_ids(this->tsp.numCities); // create vect of city ids
     int next_city = -1;
-    int curr_city = rand() % this->num_cities;
+    int curr_city = rand() % this->;
     while (cities_remaining.size() >= 0) {
         double r = (double)rand() / RAND_MAX;
         if (r < this->q_naught) {
