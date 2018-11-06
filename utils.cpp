@@ -39,7 +39,6 @@ void printvect(vector<int> vect) {
     cout << endl;
 }
 
-<<<<<<< HEAD
 double randomDoubleInRange(double fMin, double fMax)
 {
     double f = (double)rand() / RAND_MAX;
