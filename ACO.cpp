@@ -28,10 +28,11 @@ ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
     this->rho = rho;
     this->bestTourSoFar = *new vector<int>();
     this->bestDistanceSoFar = DBL_MAX;
-    this->pheremones = (double**) malloc(sizeof(double*) * this->tsp.numCities);
+    this->pheromones = (double**) malloc(sizeof(double*) * this->tsp.numCities);
     this->distances = (double**) malloc(sizeof(double*) * this->tsp.numCities);
     for (int i = 0; i < this->tsp.numCities; i++){
-        pheremones[i] = (double*) malloc(sizeof(double*) * this->tsp.numCities);
+        bestTourSoFar.push_back(i); // placeholder
+        pheromones[i] = (double*) malloc(sizeof(double*) * this->tsp.numCities);
         distances[i] = (double*) malloc(sizeof(double*) * this->tsp.numCities); 
         for (int j = 0; j < this->tsp.numCities; j++){
             City city_i = tsp.cities[i];

@@ -18,21 +18,32 @@ Elitist::Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double b
 
 void Elitist::search(){
     //This is the main loop
-
+    vector< vector<int> > tours = *new vector< vector<int> >();
+    vector<double> tourLengths = *new vector<double>();
     for (int i = 0; i < this->maxIterations; i++){
-        for (int j = 0; j < this->numAnts; j++){
+        for (int j = 0; j < this->numAnts; j++) {
             vector<int> tour = run_tour();
-
+            
             //update if bestSoFar
             double tourDist = this->evaluateTour(tour);
+
             if (tourDist < this->bestDistanceSoFar){ 
                 this->bestDistanceSoFar = tourDist;
                 for (int k = 0; k < this->tsp.numCities; k++){ //Deep Copy
                     this->bestTourSoFar[k] = tour[k];
                 }
             }
+            //add to our vector of tours and lengths
+            tours.push_back(tour);
+            tourLengths.push_back(tourDist);
         }
-        //Now we should update the pheremones
+        //Now we should evaporate then update the pheromones for these tours
+        evaporatePheromones();
+        updatePheromones(tours, tourLengths);
+        updateBestSoFarPheromones();
+
+        tours.clear();
+        tourLengths.clear();
     }
 }
 
@@ -62,7 +73,7 @@ int Elitist::select_next(int curr_city, vector<int> cities_remaining) {
     double sumProbs = 0;
     vector<double> probsUpperBounds = *new vector<double>(cities_remaining.size());
     for (int i = 0; i < cities_remaining.size(); i++){
-        double tau = this->pheremones[curr_city][i];
+        double tau = this->pheromones[curr_city][i];
         double distance = this->distances[curr_city][i];
         double eta = 1/distance;
         double tau_eta = pow(tau, this->alpha) * pow(eta, this->beta);
@@ -77,3 +88,47 @@ int Elitist::select_next(int curr_city, vector<int> cities_remaining) {
     return cities_remaining[i];
 
 }
+
+
+void Elitist::updatePheromones(vector< vector<int> > tours, vector<double> tourLengths){
+    for (int i =0; i < tours.size(); i++){
+        vector<int> tour = tours[i];
+        double tourDist = tourLengths[i];
+        for (int j = 0; j< tour.size() - 1; j++){
+            // update the pheromones
+            int thisCity = tour[j];
+            int nextCity = tour[j+1];
+            pheromones[thisCity][nextCity] += (double) 1 / tourDist;
+            pheromones[nextCity][thisCity] += (double) 1 / tourDist; //we want it always to be symmetric
+        }
+        //Now do the final leg
+        pheromones[tour[0]][tour[tour.size() - 1]] += (double) 1 / tourDist;
+        pheromones[tour[tour.size() - 1]][tour[0]] += (double) 1 / tourDist;
+    }
+}
+
+void Elitist::updateBestSoFarPheromones(){
+    for (int i = 0; i < this->bestTourSoFar.size() - 1; i++){
+        int thisCity = this->bestTourSoFar[i];
+        int nextCity = this->bestTourSoFar[i+1];
+        pheromones[thisCity][nextCity] += this->elitismFactor / this->bestDistanceSoFar;
+        pheromones[nextCity][thisCity] += this->elitismFactor / this->bestDistanceSoFar;
+    }
+    pheromones[this->bestTourSoFar[0]][this->bestTourSoFar[this->bestTourSoFar.size() - 1]] += this->elitismFactor / this->bestDistanceSoFar;
+    pheromones[this->bestTourSoFar[this->bestTourSoFar.size() - 1]][this->bestTourSoFar[0]] += this->elitismFactor / this->bestDistanceSoFar;
+
+}
+
+void Elitist::evaporatePheromones(){
+    for (int i = 0; i < this->tsp.numCities; i++){
+        for (int j = 0; j < this->tsp.numCities; j++){
+            pheromones[i][j] = (1 - this->rho) * pheromones[i][j];
+        }
+    }
+}
+
+
+
+
+
+

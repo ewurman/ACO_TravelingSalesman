@@ -19,13 +19,13 @@ public class ACO {
         TSP tsp; // holds the cities
         int numAnts;
         int maxIterations;
-        double alpha; //influence of pheremones
+        double alpha; //influence of pheromones
         double beta;  //influence of heuristic (distance)
         double rho; //evaporationFactor
 
     public:
         
-        double** pheremones
+        double** pheromones
         double** dinstances
         ACO();
 
