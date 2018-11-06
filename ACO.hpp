@@ -8,15 +8,16 @@
 
 class ACO {
 
-    private:
+    protected:
+        TSP tsp; // holds the cities
         int numAnts; //30-50 seems like a good idea
         int maxIterations;
         double alpha; //influence of pheremones
         double beta;  //influence of heuristic (distance)
         double rho; //evaporationFactor
-        TSP tsp; // holds the cities
 
     public:
+        
         double** pheremones;
         double** dinstances;
         ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho);
