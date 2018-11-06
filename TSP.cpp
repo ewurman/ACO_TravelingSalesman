@@ -84,7 +84,7 @@ vector<City> TSP::parseFileForCities(string filename){
             double yCoor = stod(line);
 
             City newCity;
-            newCity.id = cityNum;
+            newCity.id = cityNum - 1; // we want them to be 0 indexed
             newCity.x = xCoor;
             newCity.y = yCoor;
             cities.push_back(newCity);

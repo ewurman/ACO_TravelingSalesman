@@ -15,13 +15,15 @@ class ACO {
         double alpha; //influence of pheremones
         double beta;  //influence of heuristic (distance)
         double rho; //evaporationFactor
-
+        vector<int> bestTourSoFar;
+        double bestDistanceSoFar;
     public:
         
         double** pheremones;
-        double** dinstances;
+        double** distances;
         ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho);
 
+        double evaluateTour(vector<int> tour);
         /*
         int select_next_city(currentCity, cities_left vector):  
             //currentCity and next city can be id# for the cities

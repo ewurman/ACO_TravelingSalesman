@@ -19,7 +19,7 @@ public class ACO {
     public:
         
         double** pheremones
-        double** dinstances
+        double** distances
         ACO();
 
 }
@@ -29,7 +29,13 @@ class Elitist : ACO {
     private:
         double elitismFactor;
     public:
+
         Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor);
+        void search();
+        vector<int> run_tour();
+        int select_next(int curr_city, vector<int> cities_remaining);
+
+
         
 };
 
