@@ -6,7 +6,9 @@
 
 
 #include <math.h>
+#include <iostream>
 
+using namespace std;
 typedef struct City {
     double x;
     double y;
@@ -29,7 +31,15 @@ typedef struct City {
 
 } City;
 
+void printvect(vector<int> vect) {
+    cout << "tour by city id: ";
+    for (int i =0; i<vect.size(); i++) {
+        cout << vect[i] << " ";
+    }
+    cout << endl;
+}
 
+<<<<<<< HEAD
 double randomDoubleInRange(double fMin, double fMax)
 {
     double f = (double)rand() / RAND_MAX;
@@ -38,3 +48,4 @@ double randomDoubleInRange(double fMin, double fMax)
 
 
 #endif
+
