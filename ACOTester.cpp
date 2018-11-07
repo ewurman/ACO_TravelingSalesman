@@ -15,7 +15,7 @@ ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, doub
     double elitismFactor, double q_naught, double epsilon){
     // Contructor for tests on Elitist
     this->elitistAlgorithm = new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
-    this->acsAlgorithm = (ACO*) new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, epsilon);
+    this->acsAlgorithm = new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, epsilon);
 }
 
 
@@ -70,7 +70,7 @@ void ACOTester::basicTest(string optimal_filename){
 
 
 
-void compareTestOnce(double optimalDist, double& elitistResult, double& acsResult){
+void ACOTester::compareTestOnce(double optimalDist, double& elitistResult, double& acsResult){
     this->acsAlgorithm->search();
     vector<int> acsTour = this->acsAlgorithm->getBestTour();
     double acsDist = this->acsAlgorithm->getBestTourDistance();
@@ -83,12 +83,21 @@ void compareTestOnce(double optimalDist, double& elitistResult, double& acsResul
 }
 
 
-void compareTestXTimes(double optimalDist, int numTests){
+void ACOTester::compareTestManyTimes(double optimalDist){
     double sumElitist = 0;
     double sumACS = 0;
     for (int i = 0; i < numTests; i++){
-        
+        double elitistRes;
+        double acsRes;
+        compareTestOnce(optimalDist, elitistRes, acsRes);
+        sumElitist += elitistRes;
+        sumACS += acsRes;
     }
+    double avgElitistRes = sumElitist / numTests;
+    double avgACSRes = sumACS / numTests;
+    //TODO: What do we want with these?
+    cout << "avgElitistRes = " << avgElitistRes << endl;
+    cout << "avgACSRes = " << avgACSRes << endl;
 }
 
 

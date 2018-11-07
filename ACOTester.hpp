@@ -12,6 +12,7 @@ class ACOTester {
     private:
         Elitist* elitistAlgorithm;
         ACS* acsAlgorithm;
+        const static int numTests = 5;
         
     public:
 
@@ -23,7 +24,7 @@ class ACOTester {
         void basicTest(string optimal_filename);
         void compareTestOnce(double optimalDist, double& elitistResult, double& acsResult);
 
-        void compareTestXTimes(double optimalDist, int numTests);
+        void compareTestManyTimes(double optimalDist);
 
 
 
