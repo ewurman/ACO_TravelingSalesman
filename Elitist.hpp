@@ -9,14 +9,17 @@
 class ACO {
 
     protected:
+        const static bool DEBUG_ON = true;
+
         TSP tsp; // holds the cities
-        int numAnts; //30-50 seems like a good idea
+        int numAnts;
         int maxIterations;
         double alpha; //influence of pheromones
         double beta;  //influence of heuristic (distance)
         double rho; //evaporationFactor
         vector<int> bestTourSoFar;
         double bestDistanceSoFar;
+        
     public:
         
         double** pheromones;
@@ -25,7 +28,16 @@ class ACO {
 
         double evaluateTour(vector<int> tour);
 
-}
+        vector<int> nearestNeighborTour();
+        int select_nearest_remaining(int city_id, vector<int> cities_remaining);
+
+        virtual void search();
+        virtual vector<double> timedSearch();
+
+        vector<int> getBestTour() { return bestTourSoFar; }
+        double getBestTourDistance() {return bestDistanceSoFar; }
+
+};
 */
 
 class Elitist : public ACO {
@@ -41,6 +53,7 @@ class Elitist : public ACO {
         void updatePheromones(vector< vector<int> > tours, vector<double> tourLengths);
         void updateBestSoFarPheromones();
         void evaporatePheromones();
+        vector<double> timedSearch(double optimalDist, vector<double> benchmarks);
 
 
         

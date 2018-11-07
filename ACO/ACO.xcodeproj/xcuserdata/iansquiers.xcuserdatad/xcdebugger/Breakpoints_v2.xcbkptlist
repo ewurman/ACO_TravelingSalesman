@@ -159,7 +159,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
             endingLineNumber = "82"
-            landmarkName = "Elitist::select_next(int curr_city, vector&lt;int&gt; cities_remaining)"
+            landmarkName = "Elitist::timedSearch(double optimalDist, vector&lt;double&gt; benchmarks)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

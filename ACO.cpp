@@ -106,4 +106,8 @@ void ACO::search(){
     cout << "WARNING: called ACO search!!!!" << endl;
 }
 
+vector<double> ACO::timedSearch(double optimalDist, vector<double> benchmarks){
+    cout << "WARNING: called ACO timedSearch!!!!" << endl;
+    return *new vector<double>();
+}
 

@@ -9,10 +9,10 @@
 class ACO {
 
     protected:
-        const static bool DEBUG_ON = true;
-        
+        const static bool DEBUG_ON = false;
+
         TSP tsp; // holds the cities
-        int numAnts; //30-50 seems like a good idea
+        int numAnts; 
         int maxIterations;
         double alpha; //influence of pheromones
         double beta;  //influence of heuristic (distance)
@@ -32,15 +32,10 @@ class ACO {
         int select_nearest_remaining(int city_id, vector<int> cities_remaining);
 
         virtual void search();
+        virtual vector<double> timedSearch(double optimalDist, vector<double> benchmarks);
 
         vector<int> getBestTour() { return bestTourSoFar; }
         double getBestTourDistance() {return bestDistanceSoFar; }
-        /*
-        int select_next_city(currentCity, cities_left vector):  
-            //currentCity and next city can be id# for the cities
-            At the begining of each ant's tour, we deep copy the cities from TSP
-            When we return this next city, we can then remove that id from the vector of cities left.
-        */
 
 };
 
