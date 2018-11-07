@@ -18,7 +18,7 @@ using namespace std;
 class TSP {
 
     private:
-        bool DEBUG_ON = true;
+        const static bool DEBUG_ON = true;
 
     public:
 

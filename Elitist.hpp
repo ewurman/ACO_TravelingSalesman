@@ -31,7 +31,6 @@ class ACO {
 class Elitist : public ACO {
     private:
         double elitismFactor;
-        bool DEBUG_ON = true;
 
     public:
 
