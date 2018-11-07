@@ -13,16 +13,10 @@ using namespace std;
 Elitist::Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor)
 : ACO(tsp, numAnts, maxIterations, alpha, beta, rho){
     this->elitismFactor = elitismFactor;
-    if (DEBUG_ON){
-        cout << "Created Elitist object" <<endl;
-    }
 }
 
 void Elitist::search(){
     //This is the main loop
-    if (DEBUG_ON){
-        cout << "Called Elitist search!" << endl;
-    }
     vector< vector<int> > tours = *new vector< vector<int> >();
     vector<double> tourLengths = *new vector<double>();
     for (int i = 0; i < this->maxIterations; i++){
@@ -47,6 +41,7 @@ void Elitist::search(){
             tours.push_back(tour);
             tourLengths.push_back(tourDist);
         }
+        //exit(0);
         //Now we should evaporate then update the pheromones for these tours
         evaporatePheromones();
         updatePheromones(tours, tourLengths);
@@ -54,6 +49,9 @@ void Elitist::search(){
 
         tours.clear();
         tourLengths.clear();
+        if (i != 0 && i % 100 == 0){
+            cout << "Finished " << i << "th iteration" << endl;
+        }
     }
 }
 
@@ -72,6 +70,7 @@ vector<int> Elitist::run_tour(){
         next_city = select_next(next_city, cities_remaining);
         tour.push_back(next_city);
         cities_remaining.erase(std::remove(cities_remaining.begin(), cities_remaining.end(), next_city), cities_remaining.end()); 
+
         // previous line adapted from stackoverflow how to remove single element by value in vector
     }
     tour.push_back(0); //TODO: do we end with the starting city?
@@ -83,14 +82,27 @@ int Elitist::select_next(int curr_city, vector<int> cities_remaining) {
     double sumProbs = 0;
     vector<double> probsUpperBounds = *new vector<double>(cities_remaining.size());
     for (int i = 0; i < cities_remaining.size(); i++){
-        double tau = this->pheromones[curr_city][i];
-        double distance = this->distances[curr_city][i];
+        double tau = this->pheromones[curr_city][cities_remaining[i]];
+        double distance = this->distances[curr_city][cities_remaining[i]];
+        if (distance == 0){
+            return cities_remaining[i];
+        }
         double eta = 1/distance;
-        double tau_eta = pow(tau, this->alpha) * pow(eta, this->beta);
+        double tau_eta = pow(tau, this->alpha) / pow(distance, this->beta);
+        /*if (DEBUG_ON){
+            cout << "tau " << tau <<endl;
+            cout << "distance " << distance << "   eta " << eta << endl;
+            cout << "tau_eta " << tau_eta << endl;
+        }*/
         sumProbs += tau_eta;
         probsUpperBounds[i] = sumProbs;
     }
+
     double probForNext = randomDoubleInRange(0,sumProbs);
+    /*if (DEBUG_ON){
+        cout << "sumProbs is " << sumProbs << endl;
+        cout << "nextCity probability in selectNext() is " << probForNext << endl;
+    }*/
     int i = 0;
     while (probsUpperBounds[i] < probForNext){
         i++;

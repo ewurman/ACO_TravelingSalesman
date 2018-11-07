@@ -41,17 +41,9 @@ ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
             distances[i][j] = city_i - city_j;
         }
     }
-    if (DEBUG_ON){
-        cout << "Finished distances in ACO constructor" << endl;
-    }
     // now that we have distances, we can make the nearest neighbor tour and then give intial pheromone values
     vector<int> heuristicTour = this->nearestNeighborTour();
     double heuristicTourLength = this->evaluateTour(heuristicTour);
-    if (DEBUG_ON){
-        cout << "Found heuristicTour and length in ACO constructor. Length is "<< heuristicTourLength << endl;
-        printvect(heuristicTour);
-
-    }
     this->bestDistanceSoFar = heuristicTourLength;
     for (int i = 0; i < this->tsp.numCities; i++){
         pheromones[i] = (double*) malloc(sizeof(double) * this->tsp.numCities);
@@ -59,9 +51,6 @@ ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
         for (int j = 0; j < this->tsp.numCities; j++){
             pheromones[i][j] = (double) this->numAnts / heuristicTourLength;
         }
-    }
-    if (DEBUG_ON){
-        cout << "Finished ACO object constructor" << endl;
     }
 }
 

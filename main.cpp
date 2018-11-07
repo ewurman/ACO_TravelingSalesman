@@ -23,6 +23,8 @@ int main(int argc, const char * argv[]) {
     const char* tspfilename = argv[1];
     const char* optimalTour_filename = argv[2];
 
+    srand(time(0));
+
     TSP *tsp = new TSP(tspfilename);
     //tsp->printCities();
 

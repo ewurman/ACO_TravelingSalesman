@@ -43,6 +43,7 @@ vector<int> ACOTester::parseFileForOptimalTour(string filename){
             foundTourSection = true;
         }
     }
+
     return tour;
 }
 
@@ -55,6 +56,8 @@ void ACOTester::basicTest(string optimal_filename){
     double acoDist = this->acoAlgorithm->getBestTourDistance();
     cout << "ACO Algorithm found a tour of distance " << acoDist << " while the optimal distance was " << optimalDist <<endl;
     cout << "The ACO algorithm got a tour " << acoDist / optimalDist << " times the optimal" << endl;
+    cout << "The optimal Tour is: ";
+    printvect(optimalTour);
 }
 
 
