@@ -15,7 +15,7 @@ ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, doub
     double elitismFactor, double q_naught, double epsilon){
     // Contructor for tests on Elitist
     this->elitistAlgorithm = new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
-    this->acsAlgorithm = (ACO*) new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, epsilon);
+    this->acsAlgorithm = new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, epsilon);
 }
 
 
@@ -67,8 +67,6 @@ void ACOTester::basicTest(string optimal_filename){
     cout << "The optimal Tour is: ";
     printvect(optimalTour);
 }
-
-
 
 void compareTestOnce(double optimalDist, double& elitistResult, double& acsResult){
     this->acsAlgorithm->search();
