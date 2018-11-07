@@ -24,6 +24,14 @@ class ACO {
         ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho);
 
         double evaluateTour(vector<int> tour);
+
+        vector<int> nearestNeighborTour();
+        int select_nearest_remaining(int city_id, vector<int> cities_remaining);
+
+        virtual void search();
+
+        vector<int> getBestTour() { return bestTourSoFar; }
+        double getBestTourDistance() {return bestDistanceSoFar; }
         /*
         int select_next_city(currentCity, cities_left vector):  
             //currentCity and next city can be id# for the cities
