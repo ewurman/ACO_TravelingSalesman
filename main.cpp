@@ -19,6 +19,8 @@ int main(int argc, const char * argv[]) {
     srand(time(0));
     if (argc == 1) {
 
+        bool recordingToFile = true;
+
         std::map<string, double> tspProblemsMap;
         //tspProblemsMap["u574.tsp"] = 36905;
         //tspProblemsMap["u1060.tsp"] = 224094;
@@ -40,7 +42,18 @@ int main(int argc, const char * argv[]) {
          * Then we want to use these parameters to compare the two algorithms on larger files
          */
 
-
+        //This code here is for finding good parameters
+        if (recordingToFile) {
+                string header = "Factor Of Optimal, Elitist Time, ACS Time";
+                string functionFilename = "u574Comparison.csv";
+                fstream functionFile;
+                functionFile.open(functionFilename, ios::out);
+                functionFile << header << endl;
+                TSP *tsp = new TSP("TestFiles/u574.tsp");
+                double optimalLength = 36905;
+                ACOTester acoTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[1], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);
+                vector< pair<double,double> > timesForBoth = acoTester.compareTestManyTimesTimed(optimalLength);
+        }
 
 
 
@@ -83,5 +96,6 @@ int main(int argc, const char * argv[]) {
     const char * func = argv[4];
     const int dimensions = atoi(argv[5]);
     */
-
 }
+
+

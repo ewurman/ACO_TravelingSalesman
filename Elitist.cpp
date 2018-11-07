@@ -15,10 +15,11 @@ Elitist::Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double b
     this->elitismFactor = elitismFactor;
 }
 
-void Elitist::search(){
+void Elitist::search(double maxTime){
     //This is the main loop
     vector< vector<int> > tours = *new vector< vector<int> >();
     vector<double> tourLengths = *new vector<double>();
+    clock_t startTime = clock();
     for (int i = 0; i < this->maxIterations; i++){
         for (int j = 0; j < this->numAnts; j++) {
             vector<int> tour = run_tour();
@@ -40,6 +41,10 @@ void Elitist::search(){
             //add to our vector of tours and lengths
             tours.push_back(tour);
             tourLengths.push_back(tourDist);
+
+            if (((double) (clock() - startTime ) / (double)CLOCKS_PER_SEC ) > maxTime){
+                return;
+            } 
         }
         //Now we should evaporate then update the pheromones for these tours
         evaporatePheromones();
@@ -60,7 +65,7 @@ void Elitist::search(){
     This function acts the same way as search, but keeps track of when you
     find a solution benchmarks[0] , benchmarks[1], benchmarks[2], etc. of the optimal
 */
-vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmarks){
+vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
     vector<double> times = *new vector<double>();
     //This is the main loop
     vector< vector<int> > tours = *new vector< vector<int> >();
@@ -93,6 +98,10 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
             //add to our vector of tours and lengths
             tours.push_back(tour);
             tourLengths.push_back(tourDist);
+            if (((double) (clock() - startTime ) / (double)CLOCKS_PER_SEC ) > maxTime){
+                times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC);
+                return times;
+            } 
         }
         //Now we should evaporate then update the pheromones for these tours
         evaporatePheromones();
