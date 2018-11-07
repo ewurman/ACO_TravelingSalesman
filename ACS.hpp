@@ -33,7 +33,7 @@ public class ACO {
 */
 using namespace std;
 
-class ACS : ACO {
+class ACS : public ACO {
     private:
         bool DEBUG_ON = true;
 
@@ -43,7 +43,6 @@ class ACS : ACO {
         double tau_naught; // Minimum pheremone concentration
         double q_naught; // probability of choosing greedily next leg
     
-        void search();
         void run_tour();
         int select_next(int curr_id);
         int greedy_selection(int curr_city, vector<int> cities_remaining);
@@ -53,7 +52,8 @@ class ACS : ACO {
         void global_pupdate(vector<int> best_tour);
     
     public:
-        ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon);
+        ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double epsilon);
+        void search();
 
 };
 

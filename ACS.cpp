@@ -21,11 +21,16 @@ vector<int> city_ids(int num_cities) {
     return city_ids;
 }// create vect of city ids
 
-ACS::ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon)
+ACS::ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught_in, double epsilon_in)
 : ACO(tsp, numAnts, maxIterations, alpha, beta, rho){
     if (DEBUG_ON){
         cout << "Created ACS object" <<endl;
     }
+    vector<int> heuristicTour = this->nearestNeighborTour();
+    double heuristicTourLength = this->evaluateTour(heuristicTour);
+    tau_naught = 1/tsp.numCities * heuristicTourLength;
+    q_naught = q_naught_in;
+    epsilon = epsilon_in;
 }
 
 void ACS::search() {
@@ -43,10 +48,7 @@ void ACS::run_tour() {
     int next_city;
     int curr_city = 0;
     tour.push_back(curr_city);
-    vector<int>::iterator it = find(cities_remaining.begin(), cities_remaining.end(), curr_city);
-    if (it != cities_remaining.end()) {
-        cities_remaining.erase(it);
-    }
+    cities_remaining.erase(std::remove(cities_remaining.begin(), cities_remaining.end(), curr_city), cities_remaining.end());
     while (cities_remaining.size() >= 0) {
         double r = (double)rand() / RAND_MAX;
         if (r < q_naught) {
@@ -57,7 +59,13 @@ void ACS::run_tour() {
         tour_eval+=distances[curr_city][next_city];
         tour.push_back(next_city);
         local_pupdate(curr_city, next_city);
+        cities_remaining.erase(std::remove(cities_remaining.begin(), cities_remaining.end(), next_city), cities_remaining.end());
+        curr_city = next_city;
     }
+    // go home
+    tour_eval+=distances[curr_city][0];
+    tour.push_back(0);
+    
     if (tour_eval > best_eval) {
         btsf.swap(tour);
         best_eval = tour_eval;

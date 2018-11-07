@@ -30,11 +30,11 @@ int main(int argc, const char * argv[]) {
 
     //Elitist aco = *new Elitist(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities);
 //    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities); ELITIST
-    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, );
+    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, 0.7, 0.1);
     acoTester.basicTest(optimalTour_filename);
 
 
-
+    // (TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon)
 
     /*
     const char * topologytype = argv[1];

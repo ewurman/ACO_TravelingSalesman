@@ -16,10 +16,10 @@ ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, doub
     this->elitistAlgorithm = new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
 }
 
-ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon){
+ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double epsilon){
     // Contructor for tests on Elitist
     //    this->acoAlgorithm = (ACO*) new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
-    this->acoAlgorithm = (ACO*) new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, tau_naught, epsilon);
+    this->acsAlgorithm = new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, epsilon);
     if (DEBUG_ON)
         cout << "Created ACOTester object" << endl;
 }
@@ -56,10 +56,10 @@ vector<int> ACOTester::parseFileForOptimalTour(string filename){
 
 void ACOTester::basicTest(string optimal_filename){
     vector<int> optimalTour = this->parseFileForOptimalTour(optimal_filename);
-    double optimalDist = this->acoAlgorithm->evaluateTour(optimalTour);
-    this->acoAlgorithm->search();
-    vector<int> acoTour = this->acoAlgorithm->getBestTour();
-    double acoDist = this->acoAlgorithm->getBestTourDistance();
+    double optimalDist = 10.0;//this->acsAlgorithm->evaluateTour(optimalTour);
+    this->acsAlgorithm->search();
+    vector<int> acoTour = this->acsAlgorithm->getBestTour();
+    double acoDist = this->acsAlgorithm->getBestTourDistance();
     cout << "ACO Algorithm found a tour of distance " << acoDist << " while the optimal distance was " << optimalDist <<endl;
     cout << "The ACO algorithm got a tour " << acoDist / optimalDist << " times the optimal" << endl;
     cout << "The optimal Tour is: ";
