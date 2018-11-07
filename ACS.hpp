@@ -53,7 +53,7 @@ class ACS : public ACO {
 
         //vector<int> btsf; //THESE IS ALREADY IN ACO
         //double best_eval; //THESE IS ALREADY IN ACO
-        
+
         double epsilon; //wear away factor
         double tau_naught; // Minimum pheremone concentration
         double q_naught; // probability of choosing greedily next leg
@@ -68,8 +68,8 @@ class ACS : public ACO {
     
     public:
         ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double epsilon);
-        void search();
-        vector<double> timedSearch(double optimalDist, vector<double> benchmarks);
+        void search(double maxTime);
+        vector<double> timedSearch(double optimalDist, vector<double> benchmarks, double maxTime);
 };
 
 

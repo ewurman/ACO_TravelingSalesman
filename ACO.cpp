@@ -102,11 +102,11 @@ int ACO::select_nearest_remaining(int city_id, vector<int> cities_remaining){
     return next_city;
 }
 
-void ACO::search(){
+void ACO::search(double maxTime){
     cout << "WARNING: called ACO search!!!!" << endl;
 }
 
-vector<double> ACO::timedSearch(double optimalDist, vector<double> benchmarks){
+vector<double> ACO::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
     cout << "WARNING: called ACO timedSearch!!!!" << endl;
     return *new vector<double>();
 }

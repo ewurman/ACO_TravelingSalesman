@@ -21,6 +21,7 @@ string END_OF_FILE1 = "EOF";
 TSP::TSP(){
     this->cities = *new std::vector<City>();
     this->numCities = 0;
+    this->tspProblemFilename = "";
 }
 
 
@@ -28,6 +29,7 @@ TSP::TSP(string filename) {
     //validate the file
     this->cities = parseFileForCities(filename);
     this->numCities = (int)cities.size();
+    this->tspProblemFilename = filename;
 }
 
 vector<City> TSP::parseFileForCities(string filename){

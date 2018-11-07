@@ -33,7 +33,8 @@ ACS::ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
     epsilon = epsilon_in;
 }
 
-void ACS::search() {
+void ACS::search(double maxTime) {
+    clock_t startTime = clock();
     for (int i = 0; i < maxIterations; i++) {
         for(int j = 0; j < numAnts; j++){
             vector<int> tour = run_tour();
@@ -42,6 +43,10 @@ void ACS::search() {
                 bestTourSoFar.swap(tour);
                 this->bestDistanceSoFar = tour_eval;
             }
+
+            if (((double) (clock() - startTime ) / (double)CLOCKS_PER_SEC ) > maxTime){
+                return;
+            } 
         }
         global_pupdate(this->bestTourSoFar);
 
@@ -51,7 +56,7 @@ void ACS::search() {
     }
 }
 
-vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks){
+vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
     vector<double> times  = *new vector<double>();
     clock_t startTime = clock();
     clock_t lastImprovement = startTime;
@@ -74,6 +79,11 @@ vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks){
                     }
                 }
             }
+
+            if (((double) (clock() - startTime ) / (double)CLOCKS_PER_SEC ) > maxTime){
+                times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC);
+                return times;
+            } 
         }
         global_pupdate(this->bestTourSoFar);
 

@@ -24,6 +24,7 @@ class TSP {
 
         vector<City> cities;
         int numCities;
+        string tspProblemFilename;
         // Do we need something to represent Edges, for pheremones later?
         TSP();
         TSP(string fileName);
