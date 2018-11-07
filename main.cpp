@@ -33,19 +33,16 @@ int main(int argc, const char * argv[]) {
             TSP *tsp = new TSP(filename);
             ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities, 0.7, 0.1);
 
-
+            
             //Now run tests somehow
         }
     }
-    /*
-    if (argc != 3){
-        cout << "Proper arguments are <TSP_filename> <optimalTour_filename>" <<endl;
+    
+    else if (argc != 3){
+        cout << "Proper arguments are <TSP_filename> <optimalTour_filename> to run one comparisonTest" <<endl;
+        cout << "To run all tests, have no arguments" << endl;
         exit(0);
     }
-
-    const char* tspfilename = argv[1];
-    const char* optimalTour_filename = argv[2];
-    */
     
     else if (argc == 3) {
         const char* tspfilename = argv[1];

@@ -21,7 +21,9 @@ class ACOTester {
         vector<int> parseFileForOptimalTour(string filename);
 
         void basicTest(string optimal_filename);
+        void compareTestOnce(double optimalDist, double& elitistResult, double& acsResult);
 
+        void compareTestXTimes(double optimalDist, int numTests);
 
 
 
