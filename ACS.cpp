@@ -28,7 +28,7 @@ ACS::ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
     }
     vector<int> heuristicTour = this->nearestNeighborTour();
     double heuristicTourLength = this->evaluateTour(heuristicTour);
-    tau_naught = 1/tsp.numCities * heuristicTourLength;
+    tau_naught = 1/(double)tsp.numCities * heuristicTourLength;
     q_naught = q_naught_in;
     epsilon = epsilon_in;
 }
@@ -49,7 +49,7 @@ void ACS::run_tour() {
     int curr_city = 0;
     tour.push_back(curr_city);
     cities_remaining.erase(std::remove(cities_remaining.begin(), cities_remaining.end(), curr_city), cities_remaining.end());
-    while (cities_remaining.size() >= 0) {
+    while (cities_remaining.size() > 0) {
         double r = (double)rand() / RAND_MAX;
         if (r < q_naught) {
             next_city = greedy_selection(curr_city, cities_remaining);
@@ -87,44 +87,29 @@ int ACS::greedy_selection(int curr_city, vector<int> cities_remaining) {
     return selection;
 }
 
-double ACS::sum_options(int curr_city, vector<int> cities_remaining) {
-    double sum = 0;
-    for (int i = 0; i < cities_remaining.size(); i++) {
-        double tau = pheromones[curr_city][cities_remaining[i]];
-        double distance = distances[curr_city][cities_remaining[i]];
-        double eta = 1/distance;
-        double tau_eta = pow(tau, alpha) * pow(eta, beta);
-        sum += tau_eta;
-    }
-    return sum;
-}
+
 
 int ACS::prob_selection(int curr_city, vector<int> cities_remaining) {
-    vector<pair<int, double>> probabilities;
-    vector<double> bounds;
-    for (int i = 0; i < cities_remaining.size(); i++) {
-        double sum = sum_options(curr_city, cities_remaining);
-        double tau = pheromones[curr_city][cities_remaining[i]];
-        double distance = distances[curr_city][cities_remaining[i]];
-        double eta = 1/distance;
-        double tau_eta = pow(tau, alpha) * pow(eta, beta);
-        probabilities.push_back(make_pair(tau_eta/sum, cities_remaining[i]));
-    }
-    // sort and set bounds
-    double last = 0;
-    sort(probabilities.begin(), probabilities.end());
-    for (int i = (int)probabilities.size() - 1; i >= 0; i--) {
-        probabilities[i].first += last;
-        last+= probabilities[i].first;
-    }
-    // select from probabilities
-    double r = (double)rand() / (double)RAND_MAX;
-    for (int i = (int)probabilities.size() - 1; i >= 0; i--) {
-        if (r < probabilities[i].first) {
-            return probabilities[i].second;
+    double sumProbs = 0;
+    vector<double> probsUpperBounds = *new vector<double>(cities_remaining.size());
+    for (int i = 0; i < cities_remaining.size(); i++){
+        double tau = this->pheromones[curr_city][cities_remaining[i]];
+        double distance = this->distances[curr_city][cities_remaining[i]];
+        if (distance == 0){
+            return cities_remaining[i];
         }
+        // double eta = 1/distance;
+        double tau_eta = pow(tau, this->alpha) / pow(distance, this->beta);
+        sumProbs += tau_eta;
+        probsUpperBounds[i] = sumProbs;
     }
-    return probabilities[0].second; // shouldnt get here
+    
+    double probForNext = randomDoubleInRange(0,sumProbs);
+    int i = 0;
+    while (probsUpperBounds[i] < probForNext){
+        i++;
+    }
+    return cities_remaining[i] ;
 }
 
 void ACS::local_pupdate(int i, int j) {
