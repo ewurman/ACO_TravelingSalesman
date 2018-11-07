@@ -8,6 +8,7 @@
 #include "Elitist.hpp"
 #include "ACS.hpp"
 
+
 class ACOTester {
     private:
         Elitist* elitistAlgorithm;
@@ -29,10 +30,10 @@ class ACOTester {
         void basicTestTimed(string optimal_filename);
 
         void compareTestOnce(double optimalDist, double& elitistResult, double& acsResult);
-        void compareTestOnceTimed(double optimalDist, double& elitistResult, double& acsResult);
+        pair< vector<double>, vector<double> > compareTestOnceTimed(double optimalDist, double& elitistResult, double& acsResult);
        
         void compareTestManyTimes(double optimalDist);
-        vector< pair<double,double> > compareTestManyTimesTimed(double optimalDist);
+        pair< vector<double>, vector<double> > compareTestManyTimesTimed(double optimalDist);
 
 
 

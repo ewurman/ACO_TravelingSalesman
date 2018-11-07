@@ -9,7 +9,7 @@
 class ACO {
 
     protected:
-        const static bool DEBUG_ON = false;
+        const static bool DEBUG_ON = true;
 
         TSP tsp; // holds the cities
         int numAnts; 

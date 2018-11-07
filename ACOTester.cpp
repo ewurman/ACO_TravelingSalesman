@@ -9,7 +9,7 @@
 //bool DEBUG_ACOTESTER_ON = true;
 string TOUR_SECTION = "TOUR_SECTION";
 string END_OF_FILE = "EOF";
-bool DEBUG_ON = false;
+bool DEBUG_ON = true;
 
 ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, 
     double elitismFactor, double q_naught, double epsilon){
@@ -120,16 +120,34 @@ void ACOTester::compareTestOnce(double optimalDist, double& elitistResult, doubl
 }
 
 
-void ACOTester::compareTestOnceTimed(double optimalDist, double& elitistResult, double& acsResult){
+pair< vector<double>, vector<double> > ACOTester::compareTestOnceTimed(double optimalDist, double& elitistResult, double& acsResult){
+    if (DEBUG_ON){
+        cout << "Entered ACOTester::compareTestOnceTimed" << endl;
+    }
+
     vector<double> acsTimes = this->acsAlgorithm->timedSearch(optimalDist, this->timingBenchmarks, this->maxTimeSearching);
+    if (DEBUG_ON){
+        cout << "Finished ACS timed search" << endl;
+    }
     vector<int> acsTour = this->acsAlgorithm->getBestTour();
     double acsDist = this->acsAlgorithm->getBestTourDistance();
     acsResult = acsDist / optimalDist;
+
+    if (DEBUG_ON){
+        cout << "Found ACS results in ACOTester::compareTestOnceTimed" << endl;
+    }
 
     vector<double> elitistTimes = this->elitistAlgorithm->timedSearch(optimalDist, this->timingBenchmarks, this->maxTimeSearching);
     vector<int> elitistTour = this->elitistAlgorithm->getBestTour();
     double elitistDist = this->elitistAlgorithm->getBestTourDistance();
     elitistResult = elitistDist / optimalDist;
+
+    if (DEBUG_ON){
+        cout << "Found Elitist results in ACOTester::compareTestOnceTimed" << endl;
+    }
+
+    pair< vector<double>, vector<double> > times = *new pair< vector<double>, vector<double> >(elitistTimes, acsTimes);
+    return times;
 }
 
 
@@ -151,14 +169,14 @@ void ACOTester::compareTestManyTimes(double optimalDist){
 }
 
 
-vector< pair<double,double> > ACOTester::compareTestManyTimesTimed(double optimalDist){
-    vector< pair<double,double> > timesForBoth;
+pair< vector<double>, vector<double> > ACOTester::compareTestManyTimesTimed(double optimalDist){
+    pair< vector<double>, vector<double> > timesForBoth;
     double sumElitist = 0;
     double sumACS = 0;
     for (int i = 0; i < numTests; i++){
         double elitistRes;
         double acsRes;
-        compareTestOnce(optimalDist, elitistRes, acsRes);
+        pair< vector<double>, vector<double> > thisRoundTimes = compareTestOnceTimed(optimalDist, elitistRes, acsRes);
         sumElitist += elitistRes;
         sumACS += acsRes;
     }
@@ -170,6 +188,7 @@ vector< pair<double,double> > ACOTester::compareTestManyTimesTimed(double optima
 
     return timesForBoth;
 }
+
 
 
 

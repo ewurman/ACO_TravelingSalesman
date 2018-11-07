@@ -52,12 +52,31 @@ int main(int argc, const char * argv[]) {
                 TSP *tsp = new TSP("TestFiles/u574.tsp");
                 double optimalLength = 36905;
                 ACOTester acoTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[1], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);
-                vector< pair<double,double> > timesForBoth = acoTester.compareTestManyTimesTimed(optimalLength);
+                double elitistRes, acsRes;
+                pair< vector<double>, vector<double> > timesForBoth = acoTester.compareTestOnceTimed(optimalLength, elitistRes, acsRes);
+                //pair< vector<double>, vector<double> > timesForBoth = acoTester.compareTestManyTimesTimed(optimalLength);
+                
+                cout << "Finished ACOTester::compareTestOnceTimed" << endl;
+
+                for (int i = 0; i < acoTester.timingBenchmarks.size(); i++){
+                    cout << acoTester.timingBenchmarks[i] << " Elitist: ";
+                    if (i < timesForBoth.first.size()){
+                        cout << timesForBoth.first[i] << " ";
+                    }
+                    else{
+                        cout << "N/A ";
+                    }
+                    cout << "ACS: ";
+                    if (i < timesForBoth.second.size()){
+                        cout << timesForBoth.second[i] << " ";
+                    }
+                    else{
+                        cout << "N/A ";
+                    }
+                }
         }
 
-
-
-
+        /*
         map<string, double>::iterator it;
         for (it = tspProblemsMap.begin(); it != tspProblemsMap.end(); it++){
             string filename = it->first;
@@ -69,6 +88,7 @@ int main(int argc, const char * argv[]) {
             cout << "Testing on " << filename << " which has optimal distance of " << optimalLength << endl;
             acoTester.compareTestManyTimes(optimalLength);
         }
+        */
     }
     
     else if (argc != 3){
