@@ -6,9 +6,9 @@ By Erik Wurman and Ian Squiers
 #include "Elitist.hpp"
 #include <vector>
 #include <math.h>
+#include <iostream>
 
 using namespace std;
-
 
 Elitist::Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor)
 : ACO(tsp, numAnts, maxIterations, alpha, beta, rho){

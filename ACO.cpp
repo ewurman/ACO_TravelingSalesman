@@ -20,6 +20,7 @@ select_next_city(currentCity, cities_left vector):
 
 */
 
+
 ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho){
     if (DEBUG_ON){
         cout << "Started ACO object constructor" << endl;

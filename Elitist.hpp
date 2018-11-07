@@ -31,6 +31,8 @@ class ACO {
 class Elitist : public ACO {
     private:
         double elitismFactor;
+        bool DEBUG_ON = true;
+
     public:
 
         Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor);

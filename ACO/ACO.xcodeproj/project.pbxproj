@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6D1FE5C021927A05007F07FE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D1FE5BF21927A05007F07FE /* main.cpp */; };
+		6D1FE5C32192803A007F07FE /* ACOTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D1FE5C22192803A007F07FE /* ACOTester.cpp */; };
 		6D2131A3218CBF4100858D22 /* Elitist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D2131A1218CBF4100858D22 /* Elitist.cpp */; };
 		6D9F724A218B533F00D02E62 /* TSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D9F7245218B533E00D02E62 /* TSP.cpp */; };
 		6D9F724B218B533F00D02E62 /* ACO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D9F7246218B533E00D02E62 /* ACO.cpp */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		6D1FE5BE21927A05007F07FE /* ACOTester.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ACOTester.hpp; path = ../../ACOTester.hpp; sourceTree = "<group>"; };
 		6D1FE5BF21927A05007F07FE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../main.cpp; sourceTree = "<group>"; };
+		6D1FE5C22192803A007F07FE /* ACOTester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ACOTester.cpp; path = ../../ACOTester.cpp; sourceTree = "<group>"; };
 		6D2131A1218CBF4100858D22 /* Elitist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Elitist.cpp; path = ../../Elitist.cpp; sourceTree = "<group>"; };
 		6D2131A2218CBF4100858D22 /* Elitist.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Elitist.hpp; path = ../../Elitist.hpp; sourceTree = "<group>"; };
 		6D9F723A218B49AD00D02E62 /* ACO */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ACO; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +83,7 @@
 				6D2131A1218CBF4100858D22 /* Elitist.cpp */,
 				6D2131A2218CBF4100858D22 /* Elitist.hpp */,
 				6D1FE5BE21927A05007F07FE /* ACOTester.hpp */,
+				6D1FE5C22192803A007F07FE /* ACOTester.cpp */,
 				6D1FE5BF21927A05007F07FE /* main.cpp */,
 				6D9F7247218B533F00D02E62 /* README.md */,
 				6D9F7245218B533E00D02E62 /* TSP.cpp */,
@@ -147,6 +150,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D1FE5C32192803A007F07FE /* ACOTester.cpp in Sources */,
 				6D2131A3218CBF4100858D22 /* Elitist.cpp in Sources */,
 				6D9F724B218B533F00D02E62 /* ACO.cpp in Sources */,
 				6D1FE5C021927A05007F07FE /* main.cpp in Sources */,

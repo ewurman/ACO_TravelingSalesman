@@ -17,6 +17,7 @@ class ACO {
         double rho; //evaporationFactor
         vector<int> bestTourSoFar;
         double bestDistanceSoFar;
+        bool DEBUG_ON = false;
     public:
         
         double** pheromones;

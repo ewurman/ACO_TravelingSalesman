@@ -5,8 +5,8 @@
 
 
 #include <iostream>
-#include "ACOTester.cpp"
-#include "ACO.cpp"
+#include "ACOTester.hpp"
+#include "ACO.hpp"
 #include "TSP.hpp"
 //#include "ACS.hpp"
 #include "Elitist.hpp"
@@ -27,7 +27,8 @@ int main(int argc, const char * argv[]) {
     //tsp->printCities();
 
     //Elitist aco = *new Elitist(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities);
-    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities);
+//    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities); ELITIST
+    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, );
     acoTester.basicTest(optimalTour_filename);
 
 

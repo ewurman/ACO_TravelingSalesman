@@ -8,8 +8,10 @@
 
 #include "ACS.hpp"
 #include <math.h>
+#include <iostream>
 
 using namespace std;
+
 
 vector<int> city_ids(int num_cities) {
     vector<int> city_ids;
@@ -18,6 +20,13 @@ vector<int> city_ids(int num_cities) {
     }
     return city_ids;
 }// create vect of city ids
+
+ACS::ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon)
+: ACO(tsp, numAnts, maxIterations, alpha, beta, rho){
+    if (DEBUG_ON){
+        cout << "Created ACS object" <<endl;
+    }
+}
 
 void ACS::search() {
     for (int i = 0; i < maxIterations; i++) {
@@ -31,8 +40,8 @@ void ACS::run_tour() {
     vector<int> cities_remaining = city_ids(tsp.numCities); // create vect of city ids
     vector<int> tour;
     double tour_eval = 0;
-    int next_city = -1;
-    int curr_city = 1;
+    int next_city;
+    int curr_city = 0;
     tour.push_back(curr_city);
     vector<int>::iterator it = find(cities_remaining.begin(), cities_remaining.end(), curr_city);
     if (it != cities_remaining.end()) {

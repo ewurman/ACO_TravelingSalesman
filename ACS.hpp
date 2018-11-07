@@ -35,12 +35,15 @@ using namespace std;
 
 class ACS : ACO {
     private:
+        bool DEBUG_ON = true;
+
         vector<int> btsf;
         double best_eval;
-    
         double epsilon; //wear away factor
         double tau_naught; // Minimum pheremone concentration
         double q_naught; // probability of choosing greedily next leg
+    
+        void search();
         void run_tour();
         int select_next(int curr_id);
         int greedy_selection(int curr_city, vector<int> cities_remaining);
@@ -48,8 +51,10 @@ class ACS : ACO {
         double sum_options(int curr_city, vector<int> cities_remaining);
         void local_pupdate(int i, int j);
         void global_pupdate(vector<int> best_tour);
-        void search();
+    
     public:
+        ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon);
+
 };
 
 

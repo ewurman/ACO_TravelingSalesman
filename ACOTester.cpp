@@ -8,12 +8,20 @@
 
 //bool DEBUG_ACOTESTER_ON = true;
 string TOUR_SECTION = "TOUR_SECTION";
-//string END_OF_FILE = "EOF";
-
+string END_OF_FILE = "EOF";
+bool DEBUG_ON =false;
 
 ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor){
     // Contructor for tests on Elitist
     this->acoAlgorithm = (ACO*) new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
+    if (DEBUG_ON)
+        cout << "Created ACOTester object" << endl;
+}
+
+ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon){
+    // Contructor for tests on Elitist
+    //    this->acoAlgorithm = (ACO*) new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
+    this->acoAlgorithm = (ACO*) new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, tau_naught, epsilon);
     if (DEBUG_ON)
         cout << "Created ACOTester object" << endl;
 }
@@ -38,7 +46,7 @@ vector<int> ACOTester::parseFileForOptimalTour(string filename){
             tour.push_back(cityNum - 1); //0 index not 1 index
         }
 
-        int tourSectionStartIndex = line.find(TOUR_SECTION);
+        int tourSectionStartIndex = (int)line.find(TOUR_SECTION);
         if (tourSectionStartIndex != std::string::npos){ //we found it
             foundTourSection = true;
         }
@@ -56,6 +64,5 @@ void ACOTester::basicTest(string optimal_filename){
     cout << "ACO Algorithm found a tour of distance " << acoDist << " while the optimal distance was " << optimalDist <<endl;
     cout << "The ACO algorithm got a tour " << acoDist / optimalDist << " times the optimal" << endl;
 }
-
 
 

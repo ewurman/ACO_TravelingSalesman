@@ -15,8 +15,7 @@ using namespace std;
 string EUC_2D = "EUC_2D";
 string EDGE_WEIGHT_TYPE = "EDGE_WEIGHT_TYPE";
 string NODE_COORD_SECTION = "NODE_COORD_SECTION";
-string END_OF_FILE = "EOF";
-bool DEBUG_ON = true;
+string END_OF_FILE1 = "EOF";
 
 
 TSP::TSP(){
@@ -39,7 +38,7 @@ vector<City> TSP::parseFileForCities(string filename){
     vector<City> cities;
     while (getline(infile, line)) { 
 
-        if (!line.substr(0,3).compare(END_OF_FILE)) {
+        if (!line.substr(0,3).compare(END_OF_FILE1)) {
             return cities;
         }
         // EDGE_WEIGHT_TYPE : EUC_2D is the line we want
