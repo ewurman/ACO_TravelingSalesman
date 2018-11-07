@@ -13,9 +13,7 @@ string TOUR_SECTION = "TOUR_SECTION";
 
 ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor){
     // Contructor for tests on Elitist
-    this->acoAlgorithm = (ACO*) new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
-    if (DEBUG_ON)
-        cout << "Created ACOTester object" << endl;
+    this->elitistAlgorithm = new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
 }
 
 
