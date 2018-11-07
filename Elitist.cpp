@@ -41,7 +41,6 @@ void Elitist::search(){
             tours.push_back(tour);
             tourLengths.push_back(tourDist);
         }
-        //exit(0);
         //Now we should evaporate then update the pheromones for these tours
         evaporatePheromones();
         updatePheromones(tours, tourLengths);
@@ -53,6 +52,62 @@ void Elitist::search(){
             cout << "Finished " << i << "th iteration" << endl;
         }
     }
+}
+
+
+
+/*
+    This function acts the same way as search, but keeps track of when you
+    find a solution benchmarks[0] , benchmarks[1], benchmarks[2], etc. of the optimal
+*/
+vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmarks){
+    vector<double> times = *new vector<double>();
+    //This is the main loop
+    vector< vector<int> > tours = *new vector< vector<int> >();
+    vector<double> tourLengths = *new vector<double>();
+
+    int benchmarksIndex = 0;
+    clock_t startTime = clock();
+    clock_t lastImprovement = startTime;
+    for (int i = 0; i < this->maxIterations; i++){
+        for (int j = 0; j < this->numAnts; j++) {
+            vector<int> tour = run_tour();
+            
+            //update if bestSoFar
+            double tourDist = this->evaluateTour(tour);
+
+            if (tourDist < this->bestDistanceSoFar){ 
+                this->bestDistanceSoFar = tourDist;
+                for (int k = 0; k < this->tsp.numCities; k++){ //Deep Copy
+                    this->bestTourSoFar[k] = tour[k];
+                }
+                lastImprovement = clock();
+                if (tourDist < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
+                    clock_t now = clock();
+                    while (tourDist < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
+                        times.push_back( double( now - startTime ) / (double)CLOCKS_PER_SEC );
+                        benchmarksIndex++;
+                    }
+                }
+
+            }
+            //add to our vector of tours and lengths
+            tours.push_back(tour);
+            tourLengths.push_back(tourDist);
+        }
+        //Now we should evaporate then update the pheromones for these tours
+        evaporatePheromones();
+        updatePheromones(tours, tourLengths);
+        updateBestSoFarPheromones();
+
+        tours.clear();
+        tourLengths.clear();
+        if (i != 0 && i % 100 == 0){
+            cout << "Finished " << i << "th iteration" << endl;
+        }
+    }
+    times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC);
+    return times;
 }
 
 

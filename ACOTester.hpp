@@ -13,6 +13,7 @@ class ACOTester {
         Elitist* elitistAlgorithm;
         ACS* acsAlgorithm;
         const static int numTests = 5;
+        vector<double> timingBenchmarks; // {1.25, 1.2, 1.15, 1.1, 1.05, 1.0} built in constructor
         
     public:
 
@@ -22,8 +23,9 @@ class ACOTester {
         vector<int> parseFileForOptimalTour(string filename);
 
         void basicTest(string optimal_filename);
-        void compareTestOnce(double optimalDist, double& elitistResult, double& acsResult);
+        void basicTestTimed(string optimal_filename);
 
+        void compareTestOnce(double optimalDist, double& elitistResult, double& acsResult);
         void compareTestManyTimes(double optimalDist);
 
 

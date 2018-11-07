@@ -12,6 +12,7 @@
 #include "Elitist.cpp"
 #include "utils.cpp"
 #include <map>
+#include <fstream>
 
 int main(int argc, const char * argv[]) {
 
@@ -19,17 +20,37 @@ int main(int argc, const char * argv[]) {
     if (argc == 1) {
 
         std::map<string, double> tspProblemsMap;
-        tspProblemsMap["u574.tsp"] = 36905;
-        tspProblemsMap["u1060.tsp"] = 224094;
-        tspProblemsMap["vm1748.tsp"] = 336556;
+        //tspProblemsMap["u574.tsp"] = 36905;
+        //tspProblemsMap["u1060.tsp"] = 224094;
+        //tspProblemsMap["vm1748.tsp"] = 336556;
         tspProblemsMap["u2152.tsp"] = 64253;
+        tspProblemsMap["pcb3038.tsp"] = 137694;
+        tspProblemsMap["fnl4461.tsp"] = 182566;
+        tspProblemsMap["rl5915.tsp"] = 565530;
         
+        int ants = 15;
+        double alphas[] = {1};
+        double betas[] = {2,3.5,5};
+        double rhos[] = {0.1, 0.5};
+        double q_naughts[] = {0.7, 0.9};
+        double epsilons[] = {0.1};
+        int iterations = 1000;
+
+        /* First we want to find the parameters that lead to good solutions on a small probelem for each algorithm
+         * Then we want to use these parameters to compare the two algorithms on larger files
+         */
+
+
+
+
+
+
         map<string, double>::iterator it;
         for (it = tspProblemsMap.begin(); it != tspProblemsMap.end(); it++){
             string filename = it->first;
             double optimalLength = it->second;
-            TSP *tsp = new TSP(filename);
-            ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities, 0.7, 0.1);
+            TSP *tsp = new TSP(string("TestFiles/") + filename);
+            ACOTester acoTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[1], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);
 
             //Now run tests somehow
             cout << "Testing on " << filename << " which has optimal distance of " << optimalLength << endl;
@@ -49,7 +70,8 @@ int main(int argc, const char * argv[]) {
         TSP *tsp = new TSP(tspfilename);
     
         ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities, 0.7, 0.1);
-        acoTester.basicTest(optimalTour_filename);
+        acoTester.basicTestTimed(optimalTour_filename);
+        //acoTester.basicTest(optimalTour_filename);
     }
 
     // (TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon)

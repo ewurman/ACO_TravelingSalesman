@@ -41,6 +41,12 @@ void ACS::search() {
     }
 }
 
+vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks){
+    return *new vector<double>();
+}
+
+
+
 void ACS::run_tour() {
     vector<int> cities_remaining = city_ids(tsp.numCities); // create vect of city ids
     vector<int> tour;
