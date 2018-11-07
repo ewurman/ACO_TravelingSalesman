@@ -5,8 +5,8 @@
 
 
 #include <iostream>
-#include "ACOTester.hpp"
-#include "ACO.hpp"
+#include "ACOTester.cpp"
+#include "ACO.cpp"
 #include "TSP.hpp"
 //#include "ACS.hpp"
 #include "Elitist.hpp"
@@ -15,15 +15,24 @@
 
 int main(int argc, const char * argv[]) {
 
-    if (argc == 1){
-        cout << "Proper arguments are <TSP_filename>" <<endl;
+    if (argc != 3){
+        cout << "Proper arguments are <TSP_filename> <optimalTour_filename>" <<endl;
         exit(0);
     }
 
     const char* tspfilename = argv[1];
+    const char* optimalTour_filename = argv[2];
 
     TSP *tsp = new TSP(tspfilename);
-    tsp->printCities();
+    //tsp->printCities();
+
+    //Elitist aco = *new Elitist(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities);
+    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities);
+    acoTester.basicTest(optimalTour_filename);
+
+
+
+
     /*
     const char * topologytype = argv[1];
     int num_particles = atoi(argv[2]);

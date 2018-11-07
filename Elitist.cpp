@@ -13,11 +13,16 @@ using namespace std;
 Elitist::Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor)
 : ACO(tsp, numAnts, maxIterations, alpha, beta, rho){
     this->elitismFactor = elitismFactor;
+    if (DEBUG_ON){
+        cout << "Created Elitist object" <<endl;
+    }
 }
-
 
 void Elitist::search(){
     //This is the main loop
+    if (DEBUG_ON){
+        cout << "Called Elitist search!" << endl;
+    }
     vector< vector<int> > tours = *new vector< vector<int> >();
     vector<double> tourLengths = *new vector<double>();
     for (int i = 0; i < this->maxIterations; i++){
@@ -32,6 +37,11 @@ void Elitist::search(){
                 for (int k = 0; k < this->tsp.numCities; k++){ //Deep Copy
                     this->bestTourSoFar[k] = tour[k];
                 }
+                if (DEBUG_ON){
+                    cout << "Found a new bestTour of length " << tourDist << endl;
+                    printvect(tour);
+                }
+
             }
             //add to our vector of tours and lengths
             tours.push_back(tour);

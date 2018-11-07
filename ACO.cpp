@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "ACO.hpp"
 #include <float.h>
+#include <iostream>
 
 
 /*
@@ -20,6 +21,9 @@ select_next_city(currentCity, cities_left vector):
 */
 
 ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho){
+    if (DEBUG_ON){
+        cout << "Started ACO object constructor" << endl;
+    }
     this->tsp = tsp;
     this->numAnts = numAnts;
     this->maxIterations = maxIterations;
@@ -27,12 +31,9 @@ ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
     this->beta = beta;
     this->rho = rho;
     this->bestTourSoFar = *new vector<int>();
-    this->bestDistanceSoFar = DBL_MAX;
     this->pheromones = (double**) malloc(sizeof(double*) * this->tsp.numCities);
     this->distances = (double**) malloc(sizeof(double*) * this->tsp.numCities);
     for (int i = 0; i < this->tsp.numCities; i++){
-        bestTourSoFar.push_back(i); // placeholder
-        pheromones[i] = (double*) malloc(sizeof(double*) * this->tsp.numCities);
         distances[i] = (double*) malloc(sizeof(double*) * this->tsp.numCities); 
         for (int j = 0; j < this->tsp.numCities; j++){
             City city_i = tsp.cities[i];
@@ -40,7 +41,28 @@ ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
             distances[i][j] = city_i - city_j;
         }
     }
+    if (DEBUG_ON){
+        cout << "Finished distances in ACO constructor" << endl;
+    }
+    // now that we have distances, we can make the nearest neighbor tour and then give intial pheromone values
+    vector<int> heuristicTour = this->nearestNeighborTour();
+    double heuristicTourLength = this->evaluateTour(heuristicTour);
+    if (DEBUG_ON){
+        cout << "Found heuristicTour and length in ACO constructor. Length is "<< heuristicTourLength << endl;
+        printvect(heuristicTour);
 
+    }
+    this->bestDistanceSoFar = heuristicTourLength;
+    for (int i = 0; i < this->tsp.numCities; i++){
+        pheromones[i] = (double*) malloc(sizeof(double) * this->tsp.numCities);
+        bestTourSoFar.push_back(heuristicTour[i]);
+        for (int j = 0; j < this->tsp.numCities; j++){
+            pheromones[i][j] = (double) this->numAnts / heuristicTourLength;
+        }
+    }
+    if (DEBUG_ON){
+        cout << "Finished ACO object constructor" << endl;
+    }
 }
 
 
@@ -57,8 +79,41 @@ double ACO::evaluateTour(vector<int> tour){
 
 }
 
+vector<int> ACO::nearestNeighborTour(){
+    vector<int> tour;
+    vector<int> cities_remaining;
+    for (int i = 1; i < this->tsp.numCities; i++) {
+        cities_remaining.push_back(i); // create vect of city ids
+    }
+    int next_city = 0;
+    // start with city 0
+    tour.push_back(next_city);
+    for (int i = 1; i < this->tsp.numCities; i++){
+        //now we select the next city
+        next_city = select_nearest_remaining(next_city, cities_remaining);
+        tour.push_back(next_city);
+        cities_remaining.erase(std::remove(cities_remaining.begin(), cities_remaining.end(), next_city), cities_remaining.end()); 
+        // previous line adapted from stackoverflow how to remove single element by value in vector
+    }
+    tour.push_back(0); //end with first city too
+    return tour;
+}
 
+int ACO::select_nearest_remaining(int city_id, vector<int> cities_remaining){
+    double bestDist = DBL_MAX;
+    int next_city = city_id; //placeholder
+    for (int i = 0; i < cities_remaining.size(); i++){
+        double distToNextCity = distances[city_id][cities_remaining[i]];
+        if (distToNextCity < bestDist){
+            bestDist = distToNextCity;
+            next_city = cities_remaining[i];
+        }
+    }
+    return next_city;
+}
 
-
+void ACO::search(){
+    cout << "WARNING: called ACO search!!!!" << endl;
+}
 
 
