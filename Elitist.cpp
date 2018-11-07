@@ -1,69 +1,134 @@
-
+/*
+Elitist Ant System Code
+By Erik Wurman and Ian Squiers
+*/
 
 #include "Elitist.hpp"
 #include <vector>
+#include <math.h>
 
-
+using namespace std;
 
 
 Elitist::Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor)
-: ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho){
+: ACO(tsp, numAnts, maxIterations, alpha, beta, rho){
     this->elitismFactor = elitismFactor;
 }
 
 
+void Elitist::search(){
+    //This is the main loop
+    vector< vector<int> > tours = *new vector< vector<int> >();
+    vector<double> tourLengths = *new vector<double>();
+    for (int i = 0; i < this->maxIterations; i++){
+        for (int j = 0; j < this->numAnts; j++) {
+            vector<int> tour = run_tour();
+            
+            //update if bestSoFar
+            double tourDist = this->evaluateTour(tour);
 
+            if (tourDist < this->bestDistanceSoFar){ 
+                this->bestDistanceSoFar = tourDist;
+                for (int k = 0; k < this->tsp.numCities; k++){ //Deep Copy
+                    this->bestTourSoFar[k] = tour[k];
+                }
+            }
+            //add to our vector of tours and lengths
+            tours.push_back(tour);
+            tourLengths.push_back(tourDist);
+        }
+        //Now we should evaporate then update the pheromones for these tours
+        evaporatePheromones();
+        updatePheromones(tours, tourLengths);
+        updateBestSoFarPheromones();
 
-
-// ******************************************************************************************
-// ****** Boltzmann Selection
-// ******************************************************************************************
-
-
-inline double boltz_sum(vector<Individual> pop) {
-    double sum = 0;
-    for (unsigned i = 0; i < pop.size(); i++) {
-        sum += exp(pop[i].fitness);
+        tours.clear();
+        tourLengths.clear();
     }
-    return sum;
 }
 
-inline double * probablities_by_boltz(vector<Individual> pop) {
-    double sum = boltz_sum(pop);
-    double last_pos = 0;
-    double curr_bound = 0;
-    double * probability_of = new double [population_size + 1]; // no such thing as rank 0
-    for (int i = (population_size); i >= 0; i--) {
-        curr_bound = last_pos + (exp(pop[i].fitness) / sum);
-        probability_of[i] = curr_bound;
-        last_pos = curr_bound;
+
+vector<int> Elitist::run_tour(){
+    vector<int> tour = *new vector<int>();
+    vector<int> cities_remaining;
+    for (int i = 1; i < this->tsp.numCities; i++) {
+        cities_remaining.push_back(i); // create vect of city ids
     }
-    return probability_of;
+    int next_city = 0;
+    // start with city 0
+    tour.push_back(next_city);
+    for (int i = 1; i < this->tsp.numCities; i++){
+        //now we select the next city
+        next_city = select_next(next_city, cities_remaining);
+        tour.push_back(next_city);
+        cities_remaining.erase(std::remove(cities_remaining.begin(), cities_remaining.end(), next_city), cities_remaining.end()); 
+        // previous line adapted from stackoverflow how to remove single element by value in vector
+    }
+    tour.push_back(0); //TODO: do we end with the starting city?
+    return tour;
 }
 
 
-// fills next pop with selected individuals ready for breeding
-inline vector<Individual> boltzmann_selection( vector<> pop ) {
-    vector<Individual> selected_pop;
-    
-    // sort the population least to most fit
-    std::sort (pop.begin(), pop.end());
-    
-    double * probability_of = probablities_by_boltz(pop); // least to most probable by bound
-    for (int i = 0; i < population_size; i++) {
-        double r = (double)rand() / (double)RAND_MAX;
-        for (int j = population_size; j > 0; j--) {
-            if (r < probability_of[j]) {
-                selected_pop.push_back(copyForBreeding(pop[j - 1], num_variables));
-                break;
-            }
-            if (j == 1) {
-                // but because of rounding the bounds are not always perfect... we'll give the most fit a boost
-                selected_pop.push_back(copyForBreeding(pop[population_size - 1], num_variables));
-            }
+int Elitist::select_next(int curr_city, vector<int> cities_remaining) {
+    double sumProbs = 0;
+    vector<double> probsUpperBounds = *new vector<double>(cities_remaining.size());
+    for (int i = 0; i < cities_remaining.size(); i++){
+        double tau = this->pheromones[curr_city][i];
+        double distance = this->distances[curr_city][i];
+        double eta = 1/distance;
+        double tau_eta = pow(tau, this->alpha) * pow(eta, this->beta);
+        sumProbs += tau_eta;
+        probsUpperBounds[i] = sumProbs;
+    }
+    double probForNext = randomDoubleInRange(0,sumProbs);
+    int i = 0;
+    while (probsUpperBounds[i] < probForNext){
+        i++;
+    }
+    return cities_remaining[i];
+
+}
+
+
+void Elitist::updatePheromones(vector< vector<int> > tours, vector<double> tourLengths){
+    for (int i =0; i < tours.size(); i++){
+        vector<int> tour = tours[i];
+        double tourDist = tourLengths[i];
+        for (int j = 0; j< tour.size() - 1; j++){
+            // update the pheromones
+            int thisCity = tour[j];
+            int nextCity = tour[j+1];
+            pheromones[thisCity][nextCity] += (double) 1 / tourDist;
+            pheromones[nextCity][thisCity] += (double) 1 / tourDist; //we want it always to be symmetric
+        }
+        //Now do the final leg
+        pheromones[tour[0]][tour[tour.size() - 1]] += (double) 1 / tourDist;
+        pheromones[tour[tour.size() - 1]][tour[0]] += (double) 1 / tourDist;
+    }
+}
+
+void Elitist::updateBestSoFarPheromones(){
+    for (int i = 0; i < this->bestTourSoFar.size() - 1; i++){
+        int thisCity = this->bestTourSoFar[i];
+        int nextCity = this->bestTourSoFar[i+1];
+        pheromones[thisCity][nextCity] += this->elitismFactor / this->bestDistanceSoFar;
+        pheromones[nextCity][thisCity] += this->elitismFactor / this->bestDistanceSoFar;
+    }
+    pheromones[this->bestTourSoFar[0]][this->bestTourSoFar[this->bestTourSoFar.size() - 1]] += this->elitismFactor / this->bestDistanceSoFar;
+    pheromones[this->bestTourSoFar[this->bestTourSoFar.size() - 1]][this->bestTourSoFar[0]] += this->elitismFactor / this->bestDistanceSoFar;
+
+}
+
+void Elitist::evaporatePheromones(){
+    for (int i = 0; i < this->tsp.numCities; i++){
+        for (int j = 0; j < this->tsp.numCities; j++){
+            pheromones[i][j] = (1 - this->rho) * pheromones[i][j];
         }
     }
-    delete[] probability_of;
-    free_mem(pop);
-    return selected_pop;
 }
+
+
+
+
+
+
