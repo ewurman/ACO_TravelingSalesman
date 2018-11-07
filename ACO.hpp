@@ -9,6 +9,8 @@
 class ACO {
 
     protected:
+        const static bool DEBUG_ON = true;
+        
         TSP tsp; // holds the cities
         int numAnts; //30-50 seems like a good idea
         int maxIterations;
@@ -17,7 +19,7 @@ class ACO {
         double rho; //evaporationFactor
         vector<int> bestTourSoFar;
         double bestDistanceSoFar;
-        bool DEBUG_ON = false;
+        
     public:
         
         double** pheromones;

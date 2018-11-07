@@ -14,8 +14,9 @@ class ACOTester {
         ACS* acsAlgorithm;
         
     public:
+
         ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor, 
-            double q_naught, double tau_naught, double epsilon);
+            double q_naught, double epsilon);
 
         vector<int> parseFileForOptimalTour(string filename);
 

@@ -33,9 +33,8 @@ public class ACO {
 */
 using namespace std;
 
-class ACS : ACO {
+class ACS : public ACO {
     private:
-        bool DEBUG_ON = true;
 
         vector<int> btsf;
         double best_eval;

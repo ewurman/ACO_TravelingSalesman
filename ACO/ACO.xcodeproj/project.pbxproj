@@ -32,6 +32,7 @@
 		6D1FE5BE21927A05007F07FE /* ACOTester.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ACOTester.hpp; path = ../../ACOTester.hpp; sourceTree = "<group>"; };
 		6D1FE5BF21927A05007F07FE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../main.cpp; sourceTree = "<group>"; };
 		6D1FE5C22192803A007F07FE /* ACOTester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ACOTester.cpp; path = ../../ACOTester.cpp; sourceTree = "<group>"; };
+		6D1FE5C421929B49007F07FE /* utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = utils.hpp; path = ../../utils.hpp; sourceTree = "<group>"; };
 		6D2131A1218CBF4100858D22 /* Elitist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Elitist.cpp; path = ../../Elitist.cpp; sourceTree = "<group>"; };
 		6D2131A2218CBF4100858D22 /* Elitist.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Elitist.hpp; path = ../../Elitist.hpp; sourceTree = "<group>"; };
 		6D9F723A218B49AD00D02E62 /* ACO */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ACO; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,7 +42,6 @@
 		6D9F7247218B533F00D02E62 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		6D9F7248218B533F00D02E62 /* utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = utils.cpp; path = ../../utils.cpp; sourceTree = "<group>"; };
 		6D9F7249218B533F00D02E62 /* TSP.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TSP.hpp; path = ../../TSP.hpp; sourceTree = "<group>"; };
-		6D9F724D218B58BA00D02E62 /* utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = utils.hpp; sourceTree = SOURCE_ROOT; };
 		6D9F724E218BD78000D02E62 /* ACS.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ACS.cpp; path = ../../ACS.cpp; sourceTree = "<group>"; };
 		6D9F724F218BD78000D02E62 /* ACS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ACS.hpp; path = ../../ACS.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,9 +87,9 @@
 				6D1FE5BF21927A05007F07FE /* main.cpp */,
 				6D9F7247218B533F00D02E62 /* README.md */,
 				6D9F7245218B533E00D02E62 /* TSP.cpp */,
+				6D1FE5C421929B49007F07FE /* utils.hpp */,
 				6D9F7249218B533F00D02E62 /* TSP.hpp */,
 				6D9F7248218B533F00D02E62 /* utils.cpp */,
-				6D9F724D218B58BA00D02E62 /* utils.hpp */,
 			);
 			path = ACO;
 			sourceTree = "<group>";
