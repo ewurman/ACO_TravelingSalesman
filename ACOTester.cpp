@@ -86,7 +86,7 @@ void compareTestOnce(double optimalDist, double& elitistResult, double& acsResul
 void compareTestXTimes(double optimalDist, int numTests){
     double sumElitist = 0;
     double sumACS = 0;
-    for (int i = 0; i < numTests){
+    for (int i = 0; i < numTests; i++){
         
     }
 }
