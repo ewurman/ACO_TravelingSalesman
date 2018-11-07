@@ -4,6 +4,8 @@
 #ifndef ACOTESTER_HPP
 #define ACOTESTER_HPP
 
+#include <sstream>
+#include <iostream>
 #include "ACO.hpp"
 #include "Elitist.hpp"
 #include "ACS.hpp"
@@ -14,9 +16,8 @@ class ACOTester {
         Elitist* elitistAlgorithm;
         ACS* acsAlgorithm;
         const static int numTests = 5;
-        const static double maxTimeSearching = 3600; // 1 hour
-        
-        
+        constexpr const static double maxTimeSearching = 3600; // 1 hour
+    
     public:
 
         vector<double> timingBenchmarks; // {1.3, 1.25, 1.2, 1.15, 1.1, 1.05, 1.0} built in constructor
