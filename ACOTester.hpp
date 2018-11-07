@@ -12,11 +12,11 @@ class ACOTester {
     private:
         Elitist* elitistAlgorithm;
         ACS* acsAlgorithm;
-
         
     public:
-        ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor);
-        ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon);
+        ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor, 
+            double q_naught, double tau_naught, double epsilon);
+
         vector<int> parseFileForOptimalTour(string filename);
 
         void basicTest(string optimal_filename);

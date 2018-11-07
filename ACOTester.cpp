@@ -11,17 +11,11 @@ string TOUR_SECTION = "TOUR_SECTION";
 string END_OF_FILE = "EOF";
 bool DEBUG_ON =false;
 
-ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor){
+ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, 
+    double elitismFactor, double q_naught, double tau_naught, double epsilon){
     // Contructor for tests on Elitist
     this->elitistAlgorithm = new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
-}
-
-ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double tau_naught, double epsilon){
-    // Contructor for tests on Elitist
-    //    this->acoAlgorithm = (ACO*) new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
-    this->acoAlgorithm = (ACO*) new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, tau_naught, epsilon);
-    if (DEBUG_ON)
-        cout << "Created ACOTester object" << endl;
+    this->acsAlgorithm = (ACO*) new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, tau_naught, epsilon);
 }
 
 
