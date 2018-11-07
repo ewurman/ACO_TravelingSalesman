@@ -107,7 +107,7 @@ int Elitist::select_next(int curr_city, vector<int> cities_remaining) {
     while (probsUpperBounds[i] < probForNext){
         i++;
     }
-    return cities_remaining[i];
+    return cities_remaining[i] ;
 
 }
 

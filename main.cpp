@@ -30,7 +30,7 @@ int main(int argc, const char * argv[]) {
 
     //Elitist aco = *new Elitist(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities);
 //    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities); ELITIST
-    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, 0.7, 0.1);
+    ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, 0.3, 0.1);
     acoTester.basicTest(optimalTour_filename);
 
 
