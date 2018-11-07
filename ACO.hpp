@@ -3,8 +3,8 @@
 #define ACO_HPP
 
 #include <vector>
-#include "utils.cpp"
-#include "TSP.cpp"
+#include "utils.hpp"
+#include "TSP.hpp"
 
 class ACO {
 
@@ -17,6 +17,7 @@ class ACO {
         double rho; //evaporationFactor
         vector<int> bestTourSoFar;
         double bestDistanceSoFar;
+        bool DEBUG_ON = false;
     public:
         
         double** pheromones;
