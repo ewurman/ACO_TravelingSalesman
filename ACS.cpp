@@ -36,21 +36,61 @@ ACS::ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
 void ACS::search() {
     for (int i = 0; i < maxIterations; i++) {
         for(int j = 0; j < numAnts; j++){
-            run_tour();
+            vector<int> tour = run_tour();
+            double tour_eval = this->evaluateTour(tour);
+            if (tour_eval > this->bestDistanceSoFar) {
+                bestTourSoFar.swap(tour);
+                this->bestDistanceSoFar = tour_eval;
+            }
+        }
+        global_pupdate(this->bestTourSoFar);
+
+        if (i != 0 && i % 100 == 0){
+            cout << "Finished ACS " << i << "th iteration" << endl;
         }
     }
 }
 
 vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks){
-    return *new vector<double>();
+    vector<double> times  = *new vector<double>();
+    clock_t startTime = clock();
+    clock_t lastImprovement = startTime;
+    int benchmarksIndex = 0;
+    for (int i = 0; i < maxIterations; i++) {
+        for(int j = 0; j < numAnts; j++){
+            vector<int> tour = run_tour();
+            double tour_eval = this->evaluateTour(tour);
+            if (tour_eval > this->bestDistanceSoFar) {
+                bestTourSoFar.swap(tour);
+                this->bestDistanceSoFar = tour_eval;
+
+                //now check times to record
+                lastImprovement = clock();
+                if (tour_eval < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
+                    cout << "tour_eval " << tour_eval << endl;
+                    while (tour_eval < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
+                        times.push_back( double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC );
+                        benchmarksIndex++;
+                    }
+                }
+            }
+        }
+        global_pupdate(this->bestTourSoFar);
+
+        if (i != 0 && i % 100 == 0){
+            cout << "Finished ACS " << i << "th iteration" << endl;
+        }
+    }
+    times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC);
+    return times;
 }
 
 
 
-void ACS::run_tour() {
+vector<int> ACS::run_tour() {
     vector<int> cities_remaining = city_ids(tsp.numCities); // create vect of city ids
     vector<int> tour;
-    double tour_eval = 0;
+    //double tour_eval = 0;
     int next_city;
     int curr_city = 0;
     tour.push_back(curr_city);
@@ -62,20 +102,22 @@ void ACS::run_tour() {
         } else {
             next_city = prob_selection(curr_city, cities_remaining);
         }
-        tour_eval+=distances[curr_city][next_city];
+        //tour_eval+=distances[curr_city][next_city];
         tour.push_back(next_city);
         local_pupdate(curr_city, next_city);
         cities_remaining.erase(std::remove(cities_remaining.begin(), cities_remaining.end(), next_city), cities_remaining.end());
         curr_city = next_city;
     }
     // go home
-    tour_eval+=distances[curr_city][0];
+    //tour_eval+=distances[curr_city][0];
     tour.push_back(0);
-    
+    /*
     if (tour_eval > best_eval) {
         btsf.swap(tour);
         best_eval = tour_eval;
     }
+    */
+    return tour;
 }
 
 int ACS::greedy_selection(int curr_city, vector<int> cities_remaining) {
@@ -123,9 +165,10 @@ void ACS::local_pupdate(int i, int j) {
 }
 
 void ACS::global_pupdate(vector<int> best_tour) {
-    int lim = (int)best_tour.size() - 2;
+    int lim = (int)best_tour.size() - 1;
     for (int i = 0; i < lim; i++) {
-        pheromones[i][i+1] = (1 - rho)*pheromones[i][i+1] + rho*(1/best_eval);
+        pheromones[i][i+1] = (1 - rho)*pheromones[i][i+1] + rho*(1/this->bestDistanceSoFar);
+        pheromones[i+1][i] = (1 - rho)*pheromones[i+1][i] + rho*(1/this->bestDistanceSoFar);
     }
 }
 

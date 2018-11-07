@@ -26,7 +26,10 @@ class ACOTester {
         void basicTestTimed(string optimal_filename);
 
         void compareTestOnce(double optimalDist, double& elitistResult, double& acsResult);
+        void compareTestOnceTimed(double optimalDist, double& elitistResult, double& acsResult);
+       
         void compareTestManyTimes(double optimalDist);
+        void compareTestManyTimesTimed(double optimalDist);
 
 
 

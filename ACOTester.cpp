@@ -9,7 +9,7 @@
 //bool DEBUG_ACOTESTER_ON = true;
 string TOUR_SECTION = "TOUR_SECTION";
 string END_OF_FILE = "EOF";
-bool DEBUG_ON = true;
+bool DEBUG_ON = false;
 
 ACOTester::ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, 
     double elitismFactor, double q_naught, double epsilon){
@@ -81,16 +81,17 @@ void ACOTester::basicTestTimed(string optimal_filename){
     }
     vector<int> optimalTour = this->parseFileForOptimalTour(optimal_filename);
     double optimalDist = this->acsAlgorithm->evaluateTour(optimalTour);
-    /*
+    
     vector<double> acsTimes = this->acsAlgorithm->timedSearch(optimalDist, this->timingBenchmarks);
     vector<int> acsTour = this->acsAlgorithm->getBestTour();
     double acsDist = this->acsAlgorithm->getBestTourDistance();
-    for (int i = 0; i < acsTimes.size(); i++){
-        cout << "ACS found a tour of " this->timingBenchmarks[i] << " the optimal in " << acsTimes[i] << " seconds" << endl;
+    for (int i = 0; i < acsTimes.size() - 1; i++){
+        cout << "ACS found a tour of " << this->timingBenchmarks[i] << " the optimal in " << acsTimes[i] << " seconds" << endl;
     }
+    cout << "ACS found its best tour in " << acsTimes[acsTimes.size() - 1] << " seconds" <<endl;
     cout << "ACS Algorithm found a tour of distance " << acsDist << " while the optimal distance was " << optimalDist <<endl;
     cout << "The ACS algorithm got a tour " << acsDist / optimalDist << " times the optimal" << endl;
-    */
+    
     if (DEBUG_ON){
         cout << "evaluated Tour in basicTestTimed: " << optimalDist << endl;
     }
@@ -113,6 +114,19 @@ void ACOTester::compareTestOnce(double optimalDist, double& elitistResult, doubl
     acsResult = acsDist / optimalDist;
 
     this->elitistAlgorithm->search();
+    vector<int> elitistTour = this->elitistAlgorithm->getBestTour();
+    double elitistDist = this->elitistAlgorithm->getBestTourDistance();
+    elitistResult = elitistDist / optimalDist;
+}
+
+
+void ACOTester::compareTestOnceTimed(double optimalDist, double& elitistResult, double& acsResult){
+    vector<double> acsTimes = this->acsAlgorithm->timedSearch(optimalDist, this->timingBenchmarks);
+    vector<int> acsTour = this->acsAlgorithm->getBestTour();
+    double acsDist = this->acsAlgorithm->getBestTourDistance();
+    acsResult = acsDist / optimalDist;
+
+    vector<double> elitistTimes = this->elitistAlgorithm->timedSearch(optimalDist, this->timingBenchmarks);
     vector<int> elitistTour = this->elitistAlgorithm->getBestTour();
     double elitistDist = this->elitistAlgorithm->getBestTourDistance();
     elitistResult = elitistDist / optimalDist;

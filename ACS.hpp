@@ -51,13 +51,14 @@ using namespace std;
 class ACS : public ACO {
     private:
 
-        vector<int> btsf;
-        double best_eval;
+        //vector<int> btsf; //THESE IS ALREADY IN ACO
+        //double best_eval; //THESE IS ALREADY IN ACO
+        
         double epsilon; //wear away factor
         double tau_naught; // Minimum pheremone concentration
         double q_naught; // probability of choosing greedily next leg
     
-        void run_tour();
+        vector<int> run_tour();
         int select_next(int curr_id);
         int greedy_selection(int curr_city, vector<int> cities_remaining);
         int prob_selection(int curr_city, vector<int> cities_remaining);

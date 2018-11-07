@@ -83,9 +83,8 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
                 }
                 lastImprovement = clock();
                 if (tourDist < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
-                    clock_t now = clock();
                     while (tourDist < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
-                        times.push_back( double( now - startTime ) / (double)CLOCKS_PER_SEC );
+                        times.push_back( double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC );
                         benchmarksIndex++;
                     }
                 }
@@ -103,7 +102,7 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
         tours.clear();
         tourLengths.clear();
         if (i != 0 && i % 100 == 0){
-            cout << "Finished " << i << "th iteration" << endl;
+            cout << "Finished Elitist's " << i << "th iteration" << endl;
         }
     }
     times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC);
