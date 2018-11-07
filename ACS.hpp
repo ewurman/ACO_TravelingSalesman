@@ -51,9 +51,8 @@ class ACS : public ACO {
         void global_pupdate(vector<int> best_tour);
     
     public:
-        void search();
         ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double epsilon);
-
+        void search();
 };
 
 

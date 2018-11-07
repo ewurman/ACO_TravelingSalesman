@@ -13,8 +13,6 @@
 #include "utils.cpp"
 #include <map>
 
-
-
 int main(int argc, const char * argv[]) {
 
     srand(time(0));
@@ -33,8 +31,9 @@ int main(int argc, const char * argv[]) {
             TSP *tsp = new TSP(filename);
             ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities, 0.7, 0.1);
 
-            
             //Now run tests somehow
+            cout << "Testing on " << filename << " which has optimal distance of " << optimalLength << endl;
+            acoTester.compareTestManyTimes(optimalLength);
         }
     }
     
