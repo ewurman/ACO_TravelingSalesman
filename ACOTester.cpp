@@ -53,12 +53,48 @@ void ACOTester::basicTest(string optimal_filename){
     vector<int> optimalTour = this->parseFileForOptimalTour(optimal_filename);
     double optimalDist = 10.0;//this->acsAlgorithm->evaluateTour(optimalTour);
     this->acsAlgorithm->search();
-    vector<int> acoTour = this->acsAlgorithm->getBestTour();
-    double acoDist = this->acsAlgorithm->getBestTourDistance();
-    cout << "ACO Algorithm found a tour of distance " << acoDist << " while the optimal distance was " << optimalDist <<endl;
-    cout << "The ACO algorithm got a tour " << acoDist / optimalDist << " times the optimal" << endl;
+    vector<int> acsTour = this->acsAlgorithm->getBestTour();
+    double acsDist = this->acsAlgorithm->getBestTourDistance();
+    cout << "ACS Algorithm found a tour of distance " << acsDist << " while the optimal distance was " << optimalDist <<endl;
+    cout << "The ACS algorithm got a tour " << acsDist / optimalDist << " times the optimal" << endl;
+
+    this->elitistAlgorithm->search();
+    vector<int> elitistTour = this->elitistAlgorithm->getBestTour();
+    double elitistDist = this->elitistAlgorithm->getBestTourDistance();
+    cout << "Elitist Algorithm found a tour of distance " << elitistDist << " while the optimal distance was " << optimalDist <<endl;
+    cout << "The Elitist algorithm got a tour " << elitistDist / optimalDist << " times the optimal" << endl;
+    cout << endl;
     cout << "The optimal Tour is: ";
     printvect(optimalTour);
 }
+
+
+
+void compareTestOnce(double optimalDist, double& elitistResult, double& acsResult){
+    this->acsAlgorithm->search();
+    vector<int> acsTour = this->acsAlgorithm->getBestTour();
+    double acsDist = this->acsAlgorithm->getBestTourDistance();
+    acsResult = acsDist / optimalDist;
+
+    this->elitistAlgorithm->search();
+    vector<int> elitistTour = this->elitistAlgorithm->getBestTour();
+    double elitistDist = this->elitistAlgorithm->getBestTourDistance();
+    elitistResult = elitistDist / optimalDist;
+}
+
+
+void compareTestXTimes(double optimalDist, int numTests){
+    double sumElitist = 0;
+    double sumACS = 0;
+    for (int i = 0; i < numTests){
+        
+    }
+}
+
+
+
+
+
+
 
 
