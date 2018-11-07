@@ -27,7 +27,7 @@ TSP::TSP(){
 TSP::TSP(string filename) {
     //validate the file
     this->cities = parseFileForCities(filename);
-    this->numCities = cities.size();
+    this->numCities = (int)cities.size();
 }
 
 vector<City> TSP::parseFileForCities(string filename){
@@ -43,7 +43,7 @@ vector<City> TSP::parseFileForCities(string filename){
         }
         // EDGE_WEIGHT_TYPE : EUC_2D is the line we want
         // then NODE_COORD_SECTION
-        int dataType = line.find(EDGE_WEIGHT_TYPE);
+        int dataType = (int)line.find(EDGE_WEIGHT_TYPE);
         if (dataType != std::string::npos){
             if (DEBUG_ON)
                 cout << line << endl;
@@ -73,7 +73,7 @@ vector<City> TSP::parseFileForCities(string filename){
 
 
             line = line.substr(firstspace);
-            int firstCoor = line.find_first_not_of(" ");
+            int firstCoor = (int)line.find_first_not_of(" ");
             line = line.substr(firstCoor);
             // Now we should only have firstCoor space secondCoor as the line
 
@@ -92,7 +92,7 @@ vector<City> TSP::parseFileForCities(string filename){
 
 
         if (foundFormatType){
-            int nodeSection = line.find(NODE_COORD_SECTION);
+            int nodeSection = (int)line.find(NODE_COORD_SECTION);
             if (nodeSection != std::string::npos){
                 if (DEBUG_ON)
                     cout << line << endl;

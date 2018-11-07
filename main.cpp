@@ -6,10 +6,10 @@
 
 #include <iostream>
 #include "ACOTester.hpp"
-#include "ACO.cpp"
+#include "ACO.hpp"
 #include "TSP.hpp"
 //#include "ACS.hpp"
-#include "Elitist.cpp"
+#include "Elitist.hpp"
 
 
 

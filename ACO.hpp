@@ -3,8 +3,8 @@
 #define ACO_HPP
 
 #include <vector>
-#include "utils.cpp"
-#include "TSP.cpp"
+#include "utils.hpp"
+#include "TSP.hpp"
 
 class ACO {
 

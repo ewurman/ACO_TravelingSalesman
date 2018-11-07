@@ -10,7 +10,7 @@
 
 #include <vector>
 #include <string.h>
-#include "utils.cpp"
+#include "utils.hpp"
 
 using namespace std;
 

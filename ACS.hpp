@@ -41,13 +41,14 @@ class ACS : ACO {
         double epsilon; //wear away factor
         double tau_naught; // Minimum pheremone concentration
         double q_naught; // probability of choosing greedily next leg
-        void run_tour(double** dist, double** pheromones);
+        void run_tour();
         int select_next(int curr_id);
-        int greedy_selection(int curr_city, vector<int> cities_remaining, double** dist, double** pheromones);
-        int prob_selection(int curr_city, vector<int> cities_remaining, double** dist, double** pheromones);
-        double sum_options(int curr_city, vector<int> cities_remaining, double** dist, double** pheromones);
+        int greedy_selection(int curr_city, vector<int> cities_remaining);
+        int prob_selection(int curr_city, vector<int> cities_remaining);
+        double sum_options(int curr_city, vector<int> cities_remaining);
         void local_pupdate(int i, int j);
         void global_pupdate(vector<int> best_tour);
+        void search();
     public:
 };
 
