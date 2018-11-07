@@ -87,7 +87,7 @@ int Elitist::select_next(int curr_city, vector<int> cities_remaining) {
         if (distance == 0){
             return cities_remaining[i];
         }
-        double eta = 1/distance;
+        // double eta = 1/distance;
         double tau_eta = pow(tau, this->alpha) / pow(distance, this->beta);
         /*if (DEBUG_ON){
             cout << "tau " << tau <<endl;

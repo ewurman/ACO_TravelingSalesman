@@ -5,12 +5,12 @@
 
 
 #include <iostream>
-#include "ACOTester.cpp"
-#include "ACO.cpp"
-#include "TSP.cpp"
-#include "ACS.cpp"
-#include "Elitist.cpp"
-#include "utils.cpp"
+#include "ACOTester.hpp"
+#include "ACO.hpp"
+#include "TSP.hpp"
+#include "ACS.hpp"
+#include "Elitist.hpp"
+#include "utils.hpp"
 #include <map>
 
 int main(int argc, const char * argv[]) {
@@ -28,6 +28,7 @@ int main(int argc, const char * argv[]) {
         for (it = tspProblemsMap.begin(); it != tspProblemsMap.end(); it++){
             string filename = it->first;
             double optimalLength = it->second;
+            filename = 
             TSP *tsp = new TSP(filename);
             ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities, 0.7, 0.1);
 
