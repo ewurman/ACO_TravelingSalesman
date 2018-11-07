@@ -162,13 +162,17 @@ int ACS::prob_selection(int curr_city, vector<int> cities_remaining) {
 
 void ACS::local_pupdate(int i, int j) {
     pheromones[i][j] = (1-epsilon) * pheromones[i][j] + epsilon * tau_naught;
+    pheromones[j][i] = (1-epsilon) * pheromones[j][i] + epsilon * tau_naught;
 }
 
 void ACS::global_pupdate(vector<int> best_tour) {
-    int lim = (int)best_tour.size() - 1;
-    for (int i = 0; i < lim; i++) {
-        pheromones[i][i+1] = (1 - rho)*pheromones[i][i+1] + rho*(1/this->bestDistanceSoFar);
-        pheromones[i+1][i] = (1 - rho)*pheromones[i+1][i] + rho*(1/this->bestDistanceSoFar);
+    int lim = (int)best_tour.size()-1;
+    int i = 0;
+    for (i=0; i < lim; i++) {
+        int curr = best_tour.at(i);
+        int next = best_tour.at(i+1);
+        pheromones[curr][next] = (1 - rho)*pheromones[curr][next] + rho/this->bestDistanceSoFar;
+        pheromones[next][curr] = (1 - rho)*pheromones[next][curr] + rho/this->bestDistanceSoFar;
     }
 }
 
