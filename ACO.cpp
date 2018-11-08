@@ -111,3 +111,20 @@ vector<double> ACO::timedSearch(double optimalDist, vector<double> benchmarks, d
     return *new vector<double>();
 }
 
+void ACO::reset(){
+    this->bestTourSoFar.clear();
+    vector<int> heuristicTour = this->nearestNeighborTour();
+    double heuristicTourLength = this->evaluateTour(heuristicTour);
+    this->bestDistanceSoFar = heuristicTourLength;
+    for (int i = 0; i < this->tsp.numCities; i++){
+        bestTourSoFar.push_back(heuristicTour[i]);
+        for (int j = 0; j < this->tsp.numCities; j++){
+            pheromones[i][j] = (double) this->numAnts / heuristicTourLength;
+        }
+    }
+}
+
+
+
+
+

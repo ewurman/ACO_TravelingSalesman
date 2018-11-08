@@ -133,7 +133,7 @@ pair< vector<double>, vector<double> > ACOTester::compareTestOnceTimed(double op
     acsResult = acsDist / optimalDist;
 
     if (DEBUG_ON){
-        cout << "Found ACS results in ACOTester::compareTestOnceTimed" << endl;
+        cout << "Found ACS results in ACOTester::compareTestOnceTimed of " << acsResult << endl;
     }
 
     vector<double> elitistTimes = this->elitistAlgorithm->timedSearch(optimalDist, this->timingBenchmarks, this->maxTimeSearching);
@@ -142,7 +142,7 @@ pair< vector<double>, vector<double> > ACOTester::compareTestOnceTimed(double op
     elitistResult = elitistDist / optimalDist;
 
     if (DEBUG_ON){
-        cout << "Found Elitist results in ACOTester::compareTestOnceTimed" << endl;
+        cout << "Found Elitist results in ACOTester::compareTestOnceTimed of " << elitistResult << endl;
     }
 
     pair< vector<double>, vector<double> > times = *new pair< vector<double>, vector<double> >(elitistTimes, acsTimes);
@@ -188,7 +188,10 @@ pair< vector<double>, vector<double> > ACOTester::compareTestManyTimesTimed(doub
     return timesForBoth;
 }
 
-
+void ACOTester::resetAlgorithms(){
+    elitistAlgorithm->reset();
+    acsAlgorithm->reset();
+}
 
 
 
