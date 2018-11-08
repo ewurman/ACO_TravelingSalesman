@@ -50,7 +50,7 @@ void ACS::search(double maxTime) {
         }
         global_pupdate(this->bestTourSoFar);
 
-        if (i != 0 && i % 100 == 0){
+        if (i != 0 && i % 25 == 0){
             cout << "Finished ACS " << i << "th iteration" << endl;
         }
     }
@@ -87,7 +87,7 @@ vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, d
         }
         global_pupdate(this->bestTourSoFar);
 
-        if (i != 0 && i % 10 == 0){
+        if (i != 0 && i % 25 == 0){
             cout << "Finished ACS " << i << "th iteration" << endl;
         }
     }

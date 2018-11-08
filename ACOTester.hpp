@@ -19,7 +19,7 @@ class ACOTester {
     
     public:
         const static int numTests = 5;
-        
+
         vector<double> timingBenchmarks; // {1.3, 1.25, 1.2, 1.15, 1.1, 1.05, 1.0} built in constructor
 
         ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor, 
@@ -35,6 +35,8 @@ class ACOTester {
        
         void compareTestManyTimes(double optimalDist);
         pair< vector<double>, vector<double> > compareTestManyTimesTimed(double optimalDist);
+
+        void resetAlgorithms();
 
 
 

@@ -77,55 +77,45 @@ int main(int argc, const char * argv[]) {
                 for (int i = 1; i < acoTester.timingBenchmarks.size(); i++){
                     header += "," + to_string(acoTester.timingBenchmarks[i]) + "xOptimal";
                 }
+                header += ",BestFoundIn,BestResultOptimality";
                 elitistFile << header << endl;
                 acsFile << header << endl;
 
-                double elitistRes, acsRes;
+                
 
                 for (int i = 0; i < acoTester.numTests; i++){
                     clock_t startTime = clock();
+                    double elitistRes = -1;
+                    double acsRes = -1;
                     pair< vector<double>, vector<double> > timesForBoth = acoTester.compareTestOnceTimed(optimalLength, elitistRes, acsRes);
                     //pair< vector<double>, vector<double> > timesForBoth = acoTester.compareTestManyTimesTimed(optimalLength);
                     clock_t endTime = clock();
+                    acoTester.resetAlgorithms();
 
                     elitistFile << timesForBoth.first[0];
                     acsFile << timesForBoth.second[0];
-                    for (int i = 1; i < acoTester.timingBenchmarks.size(); i++){
+                    for (int j = 1; j < acoTester.timingBenchmarks.size(); j++){
                         // ELITIST FILE
-                        if (i < timesForBoth.first.size()){
-                            elitistFile << "," << timesForBoth.first[i];
-                        }
-                        else {
-                            elitistFile << "," << notFound;
-                        }
-                        if (i < timesForBoth.second.size()){
-                            acsFile << "," << timesForBoth.second[i];
-                        }
-                        else {
-                            acsFile << "," << notFound;
-                        }
-                    }
-                    elitistFile << endl;
-                    acsFile << endl;
+                        //if (i < timesForBoth.first.size()){
+                        elitistFile << "," << timesForBoth.first[j];
+                        acsFile << "," << timesForBoth.second[j];
 
-                    for (int i = 0; i < acoTester.timingBenchmarks.size(); i++){
-                        cout << acoTester.timingBenchmarks[i] << " Elitist: ";
-                        if (i < timesForBoth.first.size()){
-                            cout << timesForBoth.first[i] << " ";
-                        }
-                        else{
-                            cout << "N/A ";
-                        }
+                    }
+
+                    elitistFile << timesForBoth.first[acoTester.timingBenchmarks.size()] << "," << elitistRes << endl;
+                    acsFile << timesForBoth.second[acoTester.timingBenchmarks.size()] << "," << acsRes << endl;
+
+                    for (int j = 0; j < acoTester.timingBenchmarks.size(); j++){
+                        cout << acoTester.timingBenchmarks[j] << " Elitist: ";
+                        cout << timesForBoth.first[j] << " ";
                         cout << "ACS: ";
-                        if (i < timesForBoth.second.size()){
-                            cout << timesForBoth.second[i] << " ";
-                        }
-                        else{
-                            cout << "N/A ";
-                        }
+                        cout << timesForBoth.second[i] << " ";
                         cout << endl;
                     }
                     cout << "Total Time " << (double) (endTime - startTime ) / (double)CLOCKS_PER_SEC << endl;
+
+                    timesForBoth.first.clear();
+                    timesForBoth.second.clear();
                 }
                 elitistFile.close();
                 acsFile.close();

@@ -37,6 +37,7 @@ class ACO {
         vector<int> getBestTour() { return bestTourSoFar; }
         double getBestTourDistance() {return bestDistanceSoFar; }
 
+        void reset();
 };
 
 

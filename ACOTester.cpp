@@ -188,7 +188,10 @@ pair< vector<double>, vector<double> > ACOTester::compareTestManyTimesTimed(doub
     return timesForBoth;
 }
 
-
+void ACOTester::resetAlgorithms(){
+    elitistAlgorithm->reset();
+    acsAlgorithm->reset();
+}
 
 
 
