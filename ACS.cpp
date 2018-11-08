@@ -39,7 +39,7 @@ void ACS::search(double maxTime) {
         for(int j = 0; j < numAnts; j++){
             vector<int> tour = run_tour();
             double tour_eval = this->evaluateTour(tour);
-            if (tour_eval > this->bestDistanceSoFar) {
+            if (tour_eval < this->bestDistanceSoFar) {
                 bestTourSoFar.swap(tour);
                 this->bestDistanceSoFar = tour_eval;
             }
@@ -57,26 +57,34 @@ void ACS::search(double maxTime) {
 }
 
 vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
-    vector<double> times  = *new vector<double>(benchmarks.size());
+    vector<double> times  = *new vector<double>(benchmarks.size(), -1);
+    int benchmarksIndex = 0;
+
+    vector<int> heuristicTour = this->nearestNeighborTour();
+    double heuristicTourLength = this->evaluateTour(heuristicTour);
+
+    while (heuristicTourLength < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
+        times[benchmarksIndex] = 0;
+        benchmarksIndex++;
+    }
+
     clock_t startTime = clock();
     clock_t lastImprovement = startTime;
-    int benchmarksIndex = 0;
+    
     for (int i = 0; i < maxIterations; i++) {
         for(int j = 0; j < numAnts; j++){
             vector<int> tour = run_tour();
             double tour_eval = this->evaluateTour(tour);
-            if (tour_eval > this->bestDistanceSoFar) {
+            if (tour_eval < this->bestDistanceSoFar) {
                 bestTourSoFar.swap(tour);
                 this->bestDistanceSoFar = tour_eval;
 
                 //now check times to record
+                cout << "Tour found of optimality " << tour_eval / optimalDist << endl;
                 lastImprovement = clock();
-                if (tour_eval < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
-                    //cout << "tour_eval " << tour_eval << endl;
-                    while (tour_eval < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
-                        times[benchmarksIndex] = (double)( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC ;
-                        benchmarksIndex++;
-                    }
+                while (tour_eval < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
+                    times[benchmarksIndex] = (double)( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC ;
+                    benchmarksIndex++;
                 }
             }
 
@@ -140,6 +148,7 @@ int ACS::greedy_selection(int curr_city, vector<int> cities_remaining) {
         double tau_eta = tau * pow(eta, beta);
         if (tau_eta > max) {
             selection = cities_remaining[i];
+            max = tau_eta;
         }
     }
     return selection;

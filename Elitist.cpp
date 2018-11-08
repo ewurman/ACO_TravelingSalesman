@@ -72,6 +72,14 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
     vector<double> tourLengths = *new vector<double>();
 
     int benchmarksIndex = 0;
+    vector<int> heuristicTour = this->nearestNeighborTour();
+    double heuristicTourLength = this->evaluateTour(heuristicTour);
+
+    while (heuristicTourLength < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
+        times[benchmarksIndex] = 0;
+        benchmarksIndex++;
+    }
+
     clock_t startTime = clock();
     clock_t lastImprovement = startTime;
     for (int i = 0; i < this->maxIterations; i++){
@@ -87,12 +95,12 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
                     this->bestTourSoFar[k] = tour[k];
                 }
                 lastImprovement = clock();
-                if (tourDist < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
-                    while (tourDist < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
-                        times[benchmarksIndex] = (double)( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC ;
-                        benchmarksIndex++;
-                    }
+                cout << "Tour found of optimality " << tourDist / optimalDist << endl;
+                while (tourDist < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
+                    times[benchmarksIndex] = (double)( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC ;
+                    benchmarksIndex++;
                 }
+            
 
             }
             //add to our vector of tours and lengths
