@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../main.cpp"
-            timestampString = "563317759.960772"
+            timestampString = "563401998.9993989"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "40"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../main.cpp"
-            timestampString = "563317759.960991"
+            timestampString = "563401999.000792"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../main.cpp"
-            timestampString = "563317759.9611371"
+            timestampString = "563401999.000937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "42"
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Elitist.cpp"
-            timestampString = "563311255.057814"
+            timestampString = "563401999.0012029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
@@ -122,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../ACS.cpp"
-            timestampString = "563309603.027311"
+            timestampString = "563401999.001334"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "ACS::local_pupdate(int i, int j)"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
+            landmarkName = "ACS::prob_selection(int curr_city, vector&lt;int&gt; cities_remaining)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,29 +138,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../ACS.cpp"
-            timestampString = "563309603.0278929"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
-            landmarkName = "ACS::local_pupdate(int i, int j)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../ACS.cpp"
-            timestampString = "563309603.028361"
+            timestampString = "563401999.002001"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "177"
             endingLineNumber = "177"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ACS::prob_selection(int curr_city, vector&lt;int&gt; cities_remaining)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -170,12 +154,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../ACS.cpp"
-            timestampString = "563309603.028784"
+            timestampString = "563401999.002587"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
-            landmarkName = "ACS::local_pupdate(int i, int j)"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "ACS::prob_selection(int curr_city, vector&lt;int&gt; cities_remaining)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../ACS.cpp"
+            timestampString = "563401999.003059"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "ACS::prob_selection(int curr_city, vector&lt;int&gt; cities_remaining)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -186,12 +186,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../ACO.cpp"
-            timestampString = "563317759.9614739"
+            timestampString = "563401999.003499"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "66"
             endingLineNumber = "66"
             landmarkName = "ACO::evaluateTour(vector&lt;int&gt; tour)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../ACS.cpp"
+            timestampString = "563401999.003628"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "ACS::timedSearch(double optimalDist, vector&lt;double&gt; benchmarks, double maxTime)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../ACS.cpp"
+            timestampString = "563401999.004173"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "ACS::timedSearch(double optimalDist, vector&lt;double&gt; benchmarks, double maxTime)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../ACS.cpp"
+            timestampString = "563401999.004676"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "ACS::timedSearch(double optimalDist, vector&lt;double&gt; benchmarks, double maxTime)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

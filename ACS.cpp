@@ -38,13 +38,14 @@ void ACS::search(double maxTime) {
     for (int i = 0; i < maxIterations; i++) {
         for(int j = 0; j < numAnts; j++){
             vector<int> tour = run_tour();
-            double tour_eval = this->evaluateTour(tour);
+            double tour_eval = this->evaluateTour(tour); // returns distance
             if (tour_eval < this->bestDistanceSoFar) {
                 bestTourSoFar.swap(tour);
                 this->bestDistanceSoFar = tour_eval;
             }
 
             if (((double) (clock() - startTime ) / (double)CLOCKS_PER_SEC ) > maxTime){
+                cout << "Finished ACS due to timeout" << endl;
                 return;
             } 
         }
@@ -115,7 +116,7 @@ vector<int> ACS::run_tour() {
     cities_remaining.erase(std::remove(cities_remaining.begin(), cities_remaining.end(), curr_city), cities_remaining.end());
     while (cities_remaining.size() > 0) {
         double r = (double)rand() / RAND_MAX;
-        if (r < q_naught) {
+        if (r <= q_naught) {
             next_city = greedy_selection(curr_city, cities_remaining);
         } else {
             next_city = prob_selection(curr_city, cities_remaining);
