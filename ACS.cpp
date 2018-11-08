@@ -57,7 +57,7 @@ void ACS::search(double maxTime) {
 }
 
 vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
-    vector<double> times  = *new vector<double>();
+    vector<double> times  = *new vector<double>(benchmarks.size());
     clock_t startTime = clock();
     clock_t lastImprovement = startTime;
     int benchmarksIndex = 0;
@@ -72,9 +72,9 @@ vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, d
                 //now check times to record
                 lastImprovement = clock();
                 if (tour_eval < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
-                    cout << "tour_eval " << tour_eval << endl;
+                    //cout << "tour_eval " << tour_eval << endl;
                     while (tour_eval < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
-                        times.push_back( double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC );
+                        times[benchmarksIndex] = (double)( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC ;
                         benchmarksIndex++;
                     }
                 }
@@ -87,11 +87,11 @@ vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, d
         }
         global_pupdate(this->bestTourSoFar);
 
-        if (i != 0 && i % 100 == 0){
+        if (i != 0 && i % 10 == 0){
             cout << "Finished ACS " << i << "th iteration" << endl;
         }
     }
-    times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC);
+    times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC); //Our final optimumal time found
     return times;
 }
 

@@ -66,7 +66,7 @@ void Elitist::search(double maxTime){
     find a solution benchmarks[0] , benchmarks[1], benchmarks[2], etc. of the optimal
 */
 vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
-    vector<double> times = *new vector<double>();
+    vector<double> times = *new vector<double>(benchmarks.size());
     //This is the main loop
     vector< vector<int> > tours = *new vector< vector<int> >();
     vector<double> tourLengths = *new vector<double>();
@@ -89,7 +89,7 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
                 lastImprovement = clock();
                 if (tourDist < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
                     while (tourDist < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
-                        times.push_back( double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC );
+                        times[benchmarksIndex] = (double)( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC ;
                         benchmarksIndex++;
                     }
                 }
@@ -110,11 +110,11 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
 
         tours.clear();
         tourLengths.clear();
-        if (i != 0 && i % 100 == 0){
+        if (i != 0 && i % 10 == 0){
             cout << "Finished Elitist's " << i << "th iteration" << endl;
         }
     }
-    times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC);
+    times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC); //This is the time it took to get our optimal found
     return times;
 }
 
