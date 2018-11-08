@@ -41,9 +41,9 @@ int main(int argc, const char * argv[]) {
         
         int ants = 15;
         double alphas[] = {1};
-        double betas[] = {2,3.5,5};
-        double rhos[] = {0.1, 0.5};
-        double q_naughts[] = {0.7, 0.9};
+        double betas[] = {3.5,2,5};
+        double rhos[] = {0.5, 0.1};
+        double q_naughts[] = {0.7, 0.8, 0.9};
         double epsilons[] = {0.1};
         int iterations = 1000;
 
@@ -56,66 +56,103 @@ int main(int argc, const char * argv[]) {
                 string header = "";
                 string notFound = "-1";
 
-                string elitistFilename = "a280_Elitist.csv";
+                //string elitistFilename = "a280_Elitist.csv";
+                string elitistFilename = "u574_Elitist.csv";
                 fstream elitistFile;
                 elitistFile.open(elitistFilename, ios::out);
 
-                string acsFilename = "a280_ACS.csv";
+                //string acsFilename = "a280_ACS.csv";
+                string acsFilename = "u574_ACS.csv";
                 fstream acsFile;
                 acsFile.open(acsFilename, ios::out);
 
                 //TSP *tsp = new TSP("TestFiles/u574.tsp");
-                TSP *tsp = new TSP("TestFiles/a280.tsp");
-                //TSP *tsp = new TSP("TestFiles/berlin52.tsp");
+                //TSP *tsp = new TSP("TestFiles/a280.tsp");
+                TSP *tsp = new TSP("TestFiles/berlin52.tsp");
                 //double optimalLength = 36905;
-                double optimalLength = 2579;
-                //double optimalLength = 7432.85;
-                ACOTester acoTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[1], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);
-
-                double firstBenchmark = acoTester.timingBenchmarks[0];
-                header = to_string(firstBenchmark);
-                for (int i = 1; i < acoTester.timingBenchmarks.size(); i++){
-                    header += "," + to_string(acoTester.timingBenchmarks[i]) + "xOptimal";
-                }
-                header += ",BestFoundIn,BestResultOptimality";
-                elitistFile << header << endl;
-                acsFile << header << endl;
+                //double optimalLength = 2579;
+                double optimalLength = 7432.85;
+                
+                //ACOTester baseACOTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
 
                 
+                
 
-                for (int i = 0; i < acoTester.numTests; i++){
-                    clock_t startTime = clock();
-                    double elitistRes = -1;
-                    double acsRes = -1;
-                    pair< vector<double>, vector<double> > timesForBoth = acoTester.compareTestOnceTimed(optimalLength, elitistRes, acsRes);
-                    //pair< vector<double>, vector<double> > timesForBoth = acoTester.compareTestManyTimesTimed(optimalLength);
-                    clock_t endTime = clock();
-                    acoTester.resetAlgorithms();
+                for(int k = 0; k<6; k++){
+                    cout << "Starting All tests for k =" << k << endl;
+                    ACOTester* acoTester;
+                    if (k < 3) {
+                        acoTester= new ACOTester(*tsp, ants, iterations, alphas[0], betas[k], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
+                        if (k == 0){
+                            double firstBenchmark = acoTester->timingBenchmarks[0];
+                            header = to_string(firstBenchmark);
+                            for (int i = 1; i < acoTester->timingBenchmarks.size(); i++){
+                                header += "," + to_string(acoTester->timingBenchmarks[i]) + "xOptimal";
+                            }
+                            header += ",BestFoundIn,BestResultOptimality";
+                            elitistFile << header << endl;
+                            acsFile << header << endl;
 
-                    elitistFile << timesForBoth.first[0];
-                    acsFile << timesForBoth.second[0];
-                    for (int j = 1; j < acoTester.timingBenchmarks.size(); j++){
-                        // ELITIST FILE
-                        //if (i < timesForBoth.first.size()){
-                        elitistFile << "," << timesForBoth.first[j];
-                        acsFile << "," << timesForBoth.second[j];
+                            elitistFile << "#Baseline:"<<endl;
+                            elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
+                            acsFile << "#Baseline:"<<endl;
+                            acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[0]<<",epsilon="<<epsilons[0]<<endl;
+                        }
+                        else{
+                            elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[k]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
+                            acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[k]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[0]<<",epsilon="<<epsilons[0]<<endl;
+                        }
 
                     }
-
-                    elitistFile << "," << timesForBoth.first[acoTester.timingBenchmarks.size()] << "," << elitistRes << endl;
-                    acsFile << "," << timesForBoth.second[acoTester.timingBenchmarks.size()] << "," << acsRes << endl;
-
-                    for (int j = 0; j < acoTester.timingBenchmarks.size(); j++){
-                        cout << acoTester.timingBenchmarks[j] << " Elitist: ";
-                        cout << timesForBoth.first[j] << " ";
-                        cout << "ACS: ";
-                        cout << timesForBoth.second[j] << " ";
-                        cout << endl;
+                    else if (k == 3){
+                        acoTester= new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);   
+                        elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
+                        acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[0]<<",epsilon="<<epsilons[0]<<endl;
+                        
                     }
-                    cout << "Total Time " << (double) (endTime - startTime ) / (double)CLOCKS_PER_SEC << endl;
+                    else{
+                        acoTester= new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[k%3], epsilons[0]);
+                        elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
+                        acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[k%3]<<",epsilon="<<epsilons[0]<<endl;
+                    }
 
-                    timesForBoth.first.clear();
-                    timesForBoth.second.clear();
+                    
+
+                    for (int i = 0; i < acoTester->numTests; i++){
+                        clock_t startTime = clock();
+                        double elitistRes = -1;
+                        double acsRes = -1;
+                        pair< vector<double>, vector<double> > timesForBoth = acoTester->compareTestOnceTimed(optimalLength, elitistRes, acsRes);
+                        //pair< vector<double>, vector<double> > timesForBoth = acoTester->compareTestManyTimesTimed(optimalLength);
+                        clock_t endTime = clock();
+                        acoTester->resetAlgorithms();
+
+                        elitistFile << timesForBoth.first[0];
+                        acsFile << timesForBoth.second[0];
+                        for (int j = 1; j < acoTester->timingBenchmarks.size(); j++){
+                            // ELITIST FILE
+                            //if (i < timesForBoth.first.size()){
+                            elitistFile << "," << timesForBoth.first[j];
+                            acsFile << "," << timesForBoth.second[j];
+
+                        }
+
+                        elitistFile << "," << timesForBoth.first[acoTester->timingBenchmarks.size()] << "," << elitistRes << endl;
+                        acsFile << "," << timesForBoth.second[acoTester->timingBenchmarks.size()] << "," << acsRes << endl;
+
+                        for (int j = 0; j < acoTester->timingBenchmarks.size(); j++){
+                            cout << acoTester->timingBenchmarks[j] << " Elitist: ";
+                            cout << timesForBoth.first[j] << " ";
+                            cout << "ACS: ";
+                            cout << timesForBoth.second[j] << " ";
+                            cout << endl;
+                        }
+                        cout << "Total Time " << (double) (endTime - startTime ) / (double)CLOCKS_PER_SEC << endl;
+
+                        timesForBoth.first.clear();
+                        timesForBoth.second.clear();
+                    }
+                    delete (acoTester);
                 }
                 elitistFile.close();
                 acsFile.close();
