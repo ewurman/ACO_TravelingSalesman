@@ -66,12 +66,12 @@ int main(int argc, const char * argv[]) {
                 fstream acsFile;
                 acsFile.open(acsFilename, ios::out);
 
-                //TSP *tsp = new TSP("TestFiles/u574.tsp");
+                TSP* tsp = new TSP("TestFiles/u574.tsp");
                 //TSP *tsp = new TSP("TestFiles/a280.tsp");
-                TSP *tsp = new TSP("TestFiles/berlin52.tsp");
-                //double optimalLength = 36905;
+                //TSP *tsp = new TSP("TestFiles/berlin52.tsp");
+                double optimalLength = 36905;
                 //double optimalLength = 2579;
-                double optimalLength = 7432.85;
+                //double optimalLength = 7432.85;
                 
                 //ACOTester baseACOTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
 
@@ -82,7 +82,7 @@ int main(int argc, const char * argv[]) {
                     cout << "Starting All tests for k =" << k << endl;
                     ACOTester* acoTester;
                     if (k < 3) {
-                        acoTester= new ACOTester(*tsp, ants, iterations, alphas[0], betas[k], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
+                        acoTester= new ACOTester(tsp, ants, iterations, alphas[0], betas[k], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
                         if (k == 0){
                             double firstBenchmark = acoTester->timingBenchmarks[0];
                             header = to_string(firstBenchmark);
@@ -105,13 +105,13 @@ int main(int argc, const char * argv[]) {
 
                     }
                     else if (k == 3){
-                        acoTester= new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);   
+                        acoTester= new ACOTester(tsp, ants, iterations, alphas[0], betas[0], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);   
                         elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
                         acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[0]<<",epsilon="<<epsilons[0]<<endl;
                         
                     }
                     else{
-                        acoTester= new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[k%3], epsilons[0]);
+                        acoTester= new ACOTester(tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[k%3], epsilons[0]);
                         elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
                         acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[k%3]<<",epsilon="<<epsilons[0]<<endl;
                     }
@@ -185,7 +185,7 @@ int main(int argc, const char * argv[]) {
         const char* optimalTour_filename = argv[2];
         TSP *tsp = new TSP(tspfilename);
     
-        ACOTester acoTester = *new ACOTester(*tsp, 30, 1000, 1, 3, 0.5, tsp->numCities, 0.7, 0.1);
+        ACOTester acoTester = *new ACOTester(tsp, 30, 1000, 1, 3, 0.5, tsp->numCities, 0.7, 0.1);
         acoTester.basicTestTimed(optimalTour_filename);
         //acoTester.basicTest(optimalTour_filename);
     }

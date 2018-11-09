@@ -67,7 +67,7 @@ class ACS : public ACO {
         void global_pupdate(vector<int> best_tour);
     
     public:
-        ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double epsilon);
+        ACS(TSP* tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught, double epsilon);
         void search(double maxTime);
         vector<double> timedSearch(double optimalDist, vector<double> benchmarks, double maxTime);
 };

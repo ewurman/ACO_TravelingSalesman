@@ -22,7 +22,7 @@ class ACOTester {
 
         vector<double> timingBenchmarks; // {1.3, 1.25, 1.2, 1.15, 1.1, 1.05, 1.0} built in constructor
 
-        ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor, 
+        ACOTester(TSP* tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor, 
             double q_naught, double epsilon);
 
         vector<int> parseFileForOptimalTour(string filename);

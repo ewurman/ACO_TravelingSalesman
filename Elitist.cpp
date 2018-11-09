@@ -10,7 +10,7 @@ By Erik Wurman and Ian Squiers
 
 using namespace std;
 
-Elitist::Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor)
+Elitist::Elitist(TSP* tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor)
 : ACO(tsp, numAnts, maxIterations, alpha, beta, rho){
     this->elitismFactor = elitismFactor;
 }
@@ -29,7 +29,7 @@ void Elitist::search(double maxTime){
 
             if (tourDist < this->bestDistanceSoFar){ 
                 this->bestDistanceSoFar = tourDist;
-                for (int k = 0; k < this->tsp.numCities; k++){ //Deep Copy
+                for (int k = 0; k < this->tsp->numCities; k++){ //Deep Copy
                     this->bestTourSoFar[k] = tour[k];
                 }
                 if (DEBUG_ON){
@@ -91,7 +91,7 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
 
             if (tourDist < this->bestDistanceSoFar){ 
                 this->bestDistanceSoFar = tourDist;
-                for (int k = 0; k < this->tsp.numCities; k++){ //Deep Copy
+                for (int k = 0; k < this->tsp->numCities; k++){ //Deep Copy
                     this->bestTourSoFar[k] = tour[k];
                 }
                 lastImprovement = clock();
@@ -130,13 +130,13 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
 vector<int> Elitist::run_tour(){
     vector<int> tour = *new vector<int>();
     vector<int> cities_remaining;
-    for (int i = 1; i < this->tsp.numCities; i++) {
+    for (int i = 1; i < this->tsp->numCities; i++) {
         cities_remaining.push_back(i); // create vect of city ids
     }
     int next_city = 0;
     // start with city 0
     tour.push_back(next_city);
-    for (int i = 1; i < this->tsp.numCities; i++){
+    for (int i = 1; i < this->tsp->numCities; i++){
         //now we select the next city
         next_city = select_next(next_city, cities_remaining);
         tour.push_back(next_city);
@@ -213,8 +213,8 @@ void Elitist::updateBestSoFarPheromones(){
 }
 
 void Elitist::evaporatePheromones(){
-    for (int i = 0; i < this->tsp.numCities; i++){
-        for (int j = 0; j < this->tsp.numCities; j++){
+    for (int i = 0; i < this->tsp->numCities; i++){
+        for (int j = 0; j < this->tsp->numCities; j++){
             pheromones[i][j] = (1 - this->rho) * pheromones[i][j];
         }
     }

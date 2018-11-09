@@ -21,14 +21,14 @@ vector<int> city_ids(int num_cities) {
     return city_ids;
 }// create vect of city ids
 
-ACS::ACS(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught_in, double epsilon_in)
+ACS::ACS(TSP* tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double q_naught_in, double epsilon_in)
 : ACO(tsp, numAnts, maxIterations, alpha, beta, rho){
     if (DEBUG_ON){
         cout << "Created ACS object" <<endl;
     }
     vector<int> heuristicTour = this->nearestNeighborTour();
     double heuristicTourLength = this->evaluateTour(heuristicTour);
-    tau_naught = 1/(double)tsp.numCities * heuristicTourLength;
+    tau_naught = 1/(double)tsp->numCities * heuristicTourLength;
     q_naught = q_naught_in;
     epsilon = epsilon_in;
 }
@@ -106,7 +106,7 @@ vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, d
 
 
 vector<int> ACS::run_tour() {
-    vector<int> cities_remaining = city_ids(tsp.numCities); // create vect of city ids
+    vector<int> cities_remaining = city_ids(tsp->numCities); // create vect of city ids
     vector<int> tour;
     //double tour_eval = 0;
     int next_city;

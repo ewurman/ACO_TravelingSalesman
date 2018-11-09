@@ -11,7 +11,7 @@ class ACO {
     protected:
         const static bool DEBUG_ON = true;
 
-        TSP tsp; // holds the cities
+        TSP* tsp; // holds the cities
         int numAnts; 
         int maxIterations;
         double alpha; //influence of pheromones
@@ -24,7 +24,7 @@ class ACO {
         
         double** pheromones;
         double** distances;
-        ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho);
+        ACO(TSP* tsp, int numAnts, int maxIterations, double alpha, double beta, double rho);
 
         double evaluateTour(vector<int> tour);
 
