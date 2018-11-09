@@ -17,8 +17,10 @@ Elitist::Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double b
 
 void Elitist::search(double maxTime){
     //This is the main loop
-    vector< vector<int> > tours = *new vector< vector<int> >();
-    vector<double> tourLengths = *new vector<double>();
+//    vector< vector<int> > tours = *new vector< vector<int> >();
+//    vector<double> tourLengths = *new vector<double>();
+    vector<vector<int>> tours;
+    vector<double> tourLengths;
     clock_t startTime = clock();
     for (int i = 0; i < this->maxIterations; i++){
         for (int j = 0; j < this->numAnts; j++) {
@@ -68,14 +70,16 @@ void Elitist::search(double maxTime){
 vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
     vector<double> times = *new vector<double>(benchmarks.size(), -1);
     //This is the main loop
-    vector< vector<int> > tours = *new vector< vector<int> >();
-    vector<double> tourLengths = *new vector<double>();
-
+//    vector< vector<int> > tours = *new vector< vector<int> >();
+//    vector<double> tourLengths = *new vector<double>();
+    vector<vector<int>> tours;
+    vector<double> tourLengths;
+    
     int benchmarksIndex = 0;
     vector<int> heuristicTour = this->nearestNeighborTour();
     double heuristicTourLength = this->evaluateTour(heuristicTour);
 
-    while (heuristicTourLength < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1){
+    while (heuristicTourLength < benchmarks[benchmarksIndex]*optimalDist && benchmarksIndex <= benchmarks.size() - 1) {
         times[benchmarksIndex] = 0;
         benchmarksIndex++;
     }
@@ -128,7 +132,7 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
 
 
 vector<int> Elitist::run_tour(){
-    vector<int> tour = *new vector<int>();
+    vector<int> tour;
     vector<int> cities_remaining;
     for (int i = 1; i < this->tsp.numCities; i++) {
         cities_remaining.push_back(i); // create vect of city ids
@@ -151,7 +155,8 @@ vector<int> Elitist::run_tour(){
 
 int Elitist::select_next(int curr_city, vector<int> cities_remaining) {
     double sumProbs = 0;
-    vector<double> probsUpperBounds = *new vector<double>(cities_remaining.size());
+    // vector<double> probsUpperBounds = *new vector<double>(cities_remaining.size());
+    vector<double> probsUpperBounds;
     for (int i = 0; i < cities_remaining.size(); i++){
         double tau = this->pheromones[curr_city][cities_remaining[i]];
         double distance = this->distances[curr_city][cities_remaining[i]];
@@ -166,7 +171,8 @@ int Elitist::select_next(int curr_city, vector<int> cities_remaining) {
             cout << "tau_eta " << tau_eta << endl;
         }*/
         sumProbs += tau_eta;
-        probsUpperBounds[i] = sumProbs;
+        // probsUpperBounds[i] = sumProbs;
+        probsUpperBounds.push_back(sumProbs);
     }
 
     double probForNext = randomDoubleInRange(0,sumProbs);

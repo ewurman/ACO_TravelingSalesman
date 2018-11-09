@@ -4,28 +4,29 @@
  */
 
 
-//#include <iostream>
-//#include "ACOTester.hpp"
-//#include "ACO.hpp"
-//#include "TSP.hpp"
-//#include "ACS.hpp"
-//#include "Elitist.hpp"
-//#include "utils.hpp"
-//#include <map>
-//#include <fstream>
 #include <iostream>
-#include "ACOTester.cpp"
-#include "ACO.cpp"
-#include "TSP.cpp"
-#include "ACS.cpp"
-#include "Elitist.cpp"
-#include "utils.cpp"
+#include "ACOTester.hpp"
+#include "ACO.hpp"
+#include "TSP.hpp"
+#include "ACS.hpp"
+#include "Elitist.hpp"
+#include "utils.hpp"
 #include <map>
 #include <fstream>
+//#include <iostream>
+//#include "ACOTester.cpp"
+//#include "ACO.cpp"
+//#include "TSP.cpp"
+//#include "ACS.cpp"
+//#include "Elitist.cpp"
+//#include "utils.cpp"
+//#include <map>
+//#include <fstream>
 
 int main(int argc, const char * argv[]) {
 
-    srand(time(0));
+    // srand(time(0));
+    srand( static_cast<unsigned int>(time(NULL)));
     if (argc == 1) {
 
         bool recordingToFile = true;
@@ -57,18 +58,18 @@ int main(int argc, const char * argv[]) {
                 string notFound = "-1";
 
                 //string elitistFilename = "a280_Elitist.csv";
-                string elitistFilename = "u574_Elitist.csv";
+                string elitistFilename = "u574_Elitist_432.csv";
                 fstream elitistFile;
                 elitistFile.open(elitistFilename, ios::out);
 
                 //string acsFilename = "a280_ACS.csv";
-                string acsFilename = "u574_ACS.csv";
+                string acsFilename = "u574_ACS432.csv";
                 fstream acsFile;
                 acsFile.open(acsFilename, ios::out);
 
                 //TSP *tsp = new TSP("TestFiles/u574.tsp");
                 //TSP *tsp = new TSP("TestFiles/a280.tsp");
-                TSP *tsp = new TSP("TestFiles/berlin52.tsp");
+                TSP *tsp = new TSP("/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/u574.tsp");
                 //double optimalLength = 36905;
                 //double optimalLength = 2579;
                 double optimalLength = 7432.85;

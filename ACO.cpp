@@ -31,7 +31,7 @@ ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
     this->alpha = alpha;
     this->beta = beta;
     this->rho = rho;
-    this->bestTourSoFar = *new vector<int>();
+    this->bestTourSoFar = vector<int>();
     this->pheromones = (double**) malloc(sizeof(double*) * this->tsp.numCities);
     this->distances = (double**) malloc(sizeof(double*) * this->tsp.numCities);
     for (int i = 0; i < this->tsp.numCities; i++){

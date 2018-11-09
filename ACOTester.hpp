@@ -15,7 +15,7 @@ class ACOTester {
     private:
         Elitist* elitistAlgorithm;
         ACS* acsAlgorithm;
-        const static double maxTimeSearching = 3600; // 1 hour
+    constexpr const static double maxTimeSearching = 3600; // 1 hour
     
     public:
         const static int numTests = 5;

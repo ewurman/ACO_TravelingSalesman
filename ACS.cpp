@@ -58,7 +58,7 @@ void ACS::search(double maxTime) {
 }
 
 vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
-    vector<double> times  = *new vector<double>(benchmarks.size(), -1);
+    vector<double> times (benchmarks.size(), -1);
     int benchmarksIndex = 0;
 
     vector<int> heuristicTour = this->nearestNeighborTour();
@@ -159,7 +159,7 @@ int ACS::greedy_selection(int curr_city, vector<int> cities_remaining) {
 
 int ACS::prob_selection(int curr_city, vector<int> cities_remaining) {
     double sumProbs = 0;
-    vector<double> probsUpperBounds = *new vector<double>(cities_remaining.size());
+    vector<double> probsUpperBounds;
     for (int i = 0; i < cities_remaining.size(); i++){
         double tau = this->pheromones[curr_city][cities_remaining[i]];
         double distance = this->distances[curr_city][cities_remaining[i]];
@@ -169,7 +169,7 @@ int ACS::prob_selection(int curr_city, vector<int> cities_remaining) {
         // double eta = 1/distance;
         double tau_eta = pow(tau, this->alpha) / pow(distance, this->beta);
         sumProbs += tau_eta;
-        probsUpperBounds[i] = sumProbs;
+        probsUpperBounds.push_back(sumProbs);
     }
     
     double probForNext = randomDoubleInRange(0,sumProbs);
@@ -177,7 +177,7 @@ int ACS::prob_selection(int curr_city, vector<int> cities_remaining) {
     while (probsUpperBounds[i] < probForNext){
         i++;
     }
-    return cities_remaining[i] ;
+    return cities_remaining[i];
 }
 
 void ACS::local_pupdate(int i, int j) {
