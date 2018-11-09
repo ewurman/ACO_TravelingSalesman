@@ -15,14 +15,14 @@ class ACOTester {
     private:
         Elitist* elitistAlgorithm;
         ACS* acsAlgorithm;
-    constexpr const static double maxTimeSearching = 3600; // 1 hour
+        const static double maxTimeSearching = 3600; // 1 hour
     
     public:
         const static int numTests = 5;
 
         vector<double> timingBenchmarks; // {1.3, 1.25, 1.2, 1.15, 1.1, 1.05, 1.0} built in constructor
 
-        ACOTester(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor, 
+        ACOTester(TSP* tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor, 
             double q_naught, double epsilon);
 
         vector<int> parseFileForOptimalTour(string filename);

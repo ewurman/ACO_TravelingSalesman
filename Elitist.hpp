@@ -46,7 +46,7 @@ class Elitist : public ACO {
 
     public:
 
-        Elitist(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor);
+        Elitist(TSP* tsp, int numAnts, int maxIterations, double alpha, double beta, double rho, double elitismFactor);
         void search(double maxTime);
         vector<int> run_tour();
         int select_next(int curr_city, vector<int> cities_remaining);

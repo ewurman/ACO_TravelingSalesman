@@ -21,7 +21,7 @@ select_next_city(currentCity, cities_left vector):
 */
 
 
-ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, double rho){
+ACO::ACO(TSP* tsp, int numAnts, int maxIterations, double alpha, double beta, double rho){
     if (DEBUG_ON){
         cout << "Started ACO object constructor" << endl;
     }
@@ -31,14 +31,14 @@ ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
     this->alpha = alpha;
     this->beta = beta;
     this->rho = rho;
-    this->bestTourSoFar = vector<int>();
-    this->pheromones = (double**) malloc(sizeof(double*) * this->tsp.numCities);
-    this->distances = (double**) malloc(sizeof(double*) * this->tsp.numCities);
-    for (int i = 0; i < this->tsp.numCities; i++){
-        distances[i] = (double*) malloc(sizeof(double*) * this->tsp.numCities); 
-        for (int j = 0; j < this->tsp.numCities; j++){
-            City city_i = tsp.cities[i];
-            City city_j = tsp.cities[j];
+    this->bestTourSoFar = *new vector<int>();
+    this->pheromones = (double**) malloc(sizeof(double*) * this->tsp->numCities);
+    this->distances = (double**) malloc(sizeof(double*) * this->tsp->numCities);
+    for (int i = 0; i < this->tsp->numCities; i++){
+        distances[i] = (double*) malloc(sizeof(double*) * this->tsp->numCities); 
+        for (int j = 0; j < this->tsp->numCities; j++){
+            City city_i = tsp->cities[i];
+            City city_j = tsp->cities[j];
             distances[i][j] = city_i - city_j;
         }
     }
@@ -46,10 +46,10 @@ ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
     vector<int> heuristicTour = this->nearestNeighborTour();
     double heuristicTourLength = this->evaluateTour(heuristicTour);
     this->bestDistanceSoFar = heuristicTourLength;
-    for (int i = 0; i < this->tsp.numCities; i++){
-        pheromones[i] = (double*) malloc(sizeof(double) * this->tsp.numCities);
+    for (int i = 0; i < this->tsp->numCities; i++){
+        pheromones[i] = (double*) malloc(sizeof(double) * this->tsp->numCities);
         bestTourSoFar.push_back(heuristicTour[i]);
-        for (int j = 0; j < this->tsp.numCities; j++){
+        for (int j = 0; j < this->tsp->numCities; j++){
             pheromones[i][j] = (double) this->numAnts / heuristicTourLength;
         }
     }
@@ -58,7 +58,7 @@ ACO::ACO(TSP tsp, int numAnts, int maxIterations, double alpha, double beta, dou
 
 double ACO::evaluateTour(vector<int> tour){
     double distance = 0;
-    for(int i = 0; i < this->tsp.numCities - 1; i++){
+    for(int i = 0; i < this->tsp->numCities - 1; i++){
         int thisCity = tour[i];
         int nextCity = tour[i+1];
         distance += this->distances[thisCity][nextCity];
@@ -72,13 +72,13 @@ double ACO::evaluateTour(vector<int> tour){
 vector<int> ACO::nearestNeighborTour(){
     vector<int> tour;
     vector<int> cities_remaining;
-    for (int i = 1; i < this->tsp.numCities; i++) {
+    for (int i = 1; i < this->tsp->numCities; i++) {
         cities_remaining.push_back(i); // create vect of city ids
     }
     int next_city = 0;
     // start with city 0
     tour.push_back(next_city);
-    for (int i = 1; i < this->tsp.numCities; i++){
+    for (int i = 1; i < this->tsp->numCities; i++){
         //now we select the next city
         next_city = select_nearest_remaining(next_city, cities_remaining);
         tour.push_back(next_city);
@@ -116,9 +116,9 @@ void ACO::reset(){
     vector<int> heuristicTour = this->nearestNeighborTour();
     double heuristicTourLength = this->evaluateTour(heuristicTour);
     this->bestDistanceSoFar = heuristicTourLength;
-    for (int i = 0; i < this->tsp.numCities; i++){
+    for (int i = 0; i < this->tsp->numCities; i++){
         bestTourSoFar.push_back(heuristicTour[i]);
-        for (int j = 0; j < this->tsp.numCities; j++){
+        for (int j = 0; j < this->tsp->numCities; j++){
             pheromones[i][j] = (double) this->numAnts / heuristicTourLength;
         }
     }

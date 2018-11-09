@@ -4,29 +4,28 @@
  */
 
 
-#include <iostream>
-#include "ACOTester.hpp"
-#include "ACO.hpp"
-#include "TSP.hpp"
-#include "ACS.hpp"
-#include "Elitist.hpp"
-#include "utils.hpp"
-#include <map>
-#include <fstream>
 //#include <iostream>
-//#include "ACOTester.cpp"
-//#include "ACO.cpp"
-//#include "TSP.cpp"
-//#include "ACS.cpp"
-//#include "Elitist.cpp"
-//#include "utils.cpp"
+//#include "ACOTester.hpp"
+//#include "ACO.hpp"
+//#include "TSP.hpp"
+//#include "ACS.hpp"
+//#include "Elitist.hpp"
+//#include "utils.hpp"
 //#include <map>
 //#include <fstream>
+#include <iostream>
+#include "ACOTester.cpp"
+#include "ACO.cpp"
+#include "TSP.cpp"
+#include "ACS.cpp"
+#include "Elitist.cpp"
+#include "utils.cpp"
+#include <map>
+#include <fstream>
 
 int main(int argc, const char * argv[]) {
 
-    // srand(time(0));
-    srand( static_cast<unsigned int>(time(NULL)));
+    srand(time(0));
     if (argc == 1) {
 
         bool recordingToFile = true;
@@ -58,21 +57,21 @@ int main(int argc, const char * argv[]) {
                 string notFound = "-1";
 
                 //string elitistFilename = "a280_Elitist.csv";
-                string elitistFilename = "u574_Elitist_432.csv";
+                string elitistFilename = "u574_Elitist.csv";
                 fstream elitistFile;
                 elitistFile.open(elitistFilename, ios::out);
 
                 //string acsFilename = "a280_ACS.csv";
-                string acsFilename = "u574_ACS432.csv";
+                string acsFilename = "u574_ACS.csv";
                 fstream acsFile;
                 acsFile.open(acsFilename, ios::out);
 
-                //TSP *tsp = new TSP("TestFiles/u574.tsp");
+                TSP* tsp = new TSP("TestFiles/u574.tsp");
                 //TSP *tsp = new TSP("TestFiles/a280.tsp");
-                TSP *tsp = new TSP("/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/u574.tsp");
-                //double optimalLength = 36905;
+                //TSP *tsp = new TSP("TestFiles/berlin52.tsp");
+                double optimalLength = 36905;
                 //double optimalLength = 2579;
-                double optimalLength = 7432.85;
+                //double optimalLength = 7432.85;
                 
                 //ACOTester baseACOTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
 
@@ -83,7 +82,7 @@ int main(int argc, const char * argv[]) {
                     cout << "Starting All tests for k =" << k << endl;
                     ACOTester* acoTester;
                     if (k < 3) {
-                        acoTester= new ACOTester(*tsp, ants, iterations, alphas[0], betas[k], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
+                        acoTester= new ACOTester(tsp, ants, iterations, alphas[0], betas[k], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
                         if (k == 0){
                             double firstBenchmark = acoTester->timingBenchmarks[0];
                             header = to_string(firstBenchmark);
@@ -106,13 +105,13 @@ int main(int argc, const char * argv[]) {
 
                     }
                     else if (k == 3){
-                        acoTester= new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);   
+                        acoTester= new ACOTester(tsp, ants, iterations, alphas[0], betas[0], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);   
                         elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
                         acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[0]<<",epsilon="<<epsilons[0]<<endl;
                         
                     }
                     else{
-                        acoTester= new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[k%3], epsilons[0]);
+                        acoTester= new ACOTester(tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[k%3], epsilons[0]);
                         elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
                         acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[0]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[k%3]<<",epsilon="<<epsilons[0]<<endl;
                     }
