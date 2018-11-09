@@ -19,7 +19,7 @@ string END_OF_FILE1 = "EOF";
 
 
 TSP::TSP(){
-    this->cities = *new std::vector<City>();
+    this->cities = vector<City>();
     this->numCities = 0;
     this->tspProblemFilename = "";
 }
