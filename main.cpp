@@ -67,22 +67,23 @@ int main(int argc, const char * argv[]) {
                 string header = "";
                 string notFound = "-1";
 
-                string elitistFilename = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/Elitistvm1748_10_48.csv";
+                string elitistFilename = "u2152_Elitist.csv";
                 //string elitistFilename = "u574_Elitist.csv";
                 fstream elitistFile;
                 elitistFile.open(elitistFilename, ios::out);
 
-                string acsFilename = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/ACSvm1748_10_48.csv";
+                string acsFilename = "u2152_ACS.csv";
                 //string acsFilename = "u574_ACS.csv";
                 fstream acsFile;
                 acsFile.open(acsFilename, ios::out);
 
                 //TSP* tsp = new TSP("TestFiles/u574.tsp");
                 //TSP *tsp = new TSP("TestFiles/a280.tsp");
-                TSP *tsp = new TSP("/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/vm1748.tsp");
+                TSP *tsp = new TSP("TestFiles/u2152.tsp");
                 //double optimalLength = 36905;
                 //double optimalLength = 2579;
-                double optimalLength = 336556;
+                //double optimalLength = 7432.85;64253
+                double optimalLength = 64253;
                 
                 //ACOTester baseACOTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
 
