@@ -71,7 +71,8 @@ void Elitist::search(double maxTime){
     find a solution benchmarks[0] , benchmarks[1], benchmarks[2], etc. of the optimal
 */
 vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
-    vector<double> times (benchmarks.size(), -1);
+    vector<double> times = *new vector<double>(benchmarks.size(), -1);
+    vector<int> counts = *new vector<int>(benchmarks.size(), 0);
     //This is the main loop
 //    vector< vector<int> > tours = *new vector< vector<int> >();
 //    vector<double> tourLengths = *new vector<double>();
@@ -96,6 +97,20 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
             //update if bestSoFar
             double tourDist = this->evaluateTour(tour);
 
+
+            //do the counts
+            bool betterThanAny = false;
+            for (int k = 0; k < benchmarks.size(); k++){
+                if ( tourDist <= benchmarks[k]*optimalDist){
+                    betterThanAny = true;
+                } else {
+                    if (betterThanAny){
+                        counts[k-1]++;
+                    }
+                    break;
+                }
+            }
+
             if (tourDist < this->bestDistanceSoFar){ 
                 this->bestDistanceSoFar = tourDist;
                 for (int k = 0; k < this->tsp->numCities; k++){ //Deep Copy
@@ -107,14 +122,13 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
                     times[benchmarksIndex] = (double)( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC ;
                     benchmarksIndex++;
                 }
-            
-
             }
             //add to our vector of tours and lengths
             tours.push_back(tour);
             tourLengths.push_back(tourDist);
             if (((double) (clock() - startTime ) / (double)CLOCKS_PER_SEC ) > maxTime){
                 times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC);
+                times.insert(times.end(), counts.begin(), counts.end());
                 return times;
             } 
         }
@@ -133,6 +147,7 @@ vector<double> Elitist::timedSearch(double optimalDist, vector<double> benchmark
         }
     }
     times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC); //This is the time it took to get our optimal found
+    times.insert(times.end(), counts.begin(), counts.end());
     return times;
 }
 
