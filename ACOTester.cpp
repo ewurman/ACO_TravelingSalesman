@@ -16,12 +16,21 @@ ACOTester::ACOTester(TSP* tsp, int numAnts, int maxIterations, double alpha, dou
     this->elitistAlgorithm = new Elitist(tsp, numAnts, maxIterations, alpha, beta, rho, elitismFactor);
     this->acsAlgorithm = new ACS(tsp, numAnts, maxIterations, alpha, beta, rho, q_naught, epsilon);
     this->timingBenchmarks = *new vector<double>();
+    this->timingBenchmarks.push_back(1.40);
+    this->timingBenchmarks.push_back(1.35);
+    this->timingBenchmarks.push_back(1.325);
     this->timingBenchmarks.push_back(1.30);
+    this->timingBenchmarks.push_back(1.275);
     this->timingBenchmarks.push_back(1.25);
+    this->timingBenchmarks.push_back(1.225);
     this->timingBenchmarks.push_back(1.20);
+    this->timingBenchmarks.push_back(1.175);
     this->timingBenchmarks.push_back(1.15);
+    this->timingBenchmarks.push_back(1.125);
     this->timingBenchmarks.push_back(1.10);
+    this->timingBenchmarks.push_back(1.075);
     this->timingBenchmarks.push_back(1.05);
+    this->timingBenchmarks.push_back(1.025);
     this->timingBenchmarks.push_back(1.00);
 }
 
