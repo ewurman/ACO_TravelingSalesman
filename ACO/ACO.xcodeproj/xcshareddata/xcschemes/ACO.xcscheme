@@ -63,10 +63,12 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            isEnabled = "YES">
+            argument = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/berlin52.tsp"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            isEnabled = "YES">
+            argument = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/berlin52.opt.tour"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
