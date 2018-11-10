@@ -64,11 +64,11 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/berlin52.tsp"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/berlin52.opt.tour"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

@@ -4,24 +4,24 @@
  */
 
 
-//#include <iostream>
-//#include "ACOTester.hpp"
-//#include "ACO.hpp"
-//#include "TSP.hpp"
-//#include "ACS.hpp"
-//#include "Elitist.hpp"
-//#include "utils.hpp"
-//#include <map>
-//#include <fstream>
 #include <iostream>
-#include "ACOTester.cpp"
-#include "ACO.cpp"
-#include "TSP.cpp"
-#include "ACS.cpp"
-#include "Elitist.cpp"
-#include "utils.cpp"
+#include "ACOTester.hpp"
+#include "ACO.hpp"
+#include "TSP.hpp"
+#include "ACS.hpp"
+#include "Elitist.hpp"
+#include "utils.hpp"
 #include <map>
 #include <fstream>
+//#include <iostream>
+//#include "ACOTester.cpp"
+//#include "ACO.cpp"
+//#include "TSP.cpp"
+//#include "ACS.cpp"
+//#include "Elitist.cpp"
+//#include "utils.cpp"
+//#include <map>
+//#include <fstream>
 
 int main(int argc, const char * argv[]) {
 
@@ -67,22 +67,22 @@ int main(int argc, const char * argv[]) {
                 string header = "";
                 string notFound = "-1";
 
-                string elitistFilename = "berlin52_Elitist.csv";
+                string elitistFilename = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/Elitistvm1748_10_48.csv";
                 //string elitistFilename = "u574_Elitist.csv";
                 fstream elitistFile;
                 elitistFile.open(elitistFilename, ios::out);
 
-                string acsFilename = "berlin52_ACS.csv";
+                string acsFilename = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/ACSvm1748_10_48.csv";
                 //string acsFilename = "u574_ACS.csv";
                 fstream acsFile;
                 acsFile.open(acsFilename, ios::out);
 
                 //TSP* tsp = new TSP("TestFiles/u574.tsp");
                 //TSP *tsp = new TSP("TestFiles/a280.tsp");
-                TSP *tsp = new TSP("TestFiles/berlin52.tsp");
+                TSP *tsp = new TSP("/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/TestFiles/vm1748.tsp");
                 //double optimalLength = 36905;
                 //double optimalLength = 2579;
-                double optimalLength = 7432.85;
+                double optimalLength = 336556;
                 
                 //ACOTester baseACOTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
 
@@ -258,7 +258,7 @@ int main(int argc, const char * argv[]) {
         const char* optimalTour_filename = argv[2];
         TSP *tsp = new TSP(tspfilename);
     
-        ACOTester acoTester = *new ACOTester(*tsp, 30, 10000, 1, 3, 0.5, tsp->numCities, 0.7, 0.1);
+        ACOTester acoTester = *new ACOTester(tsp, 30, 10000, 1, 3, 0.5, tsp->numCities, 0.7, 0.1);
         acoTester.basicTestTimed(optimalTour_filename);
         //acoTester.basicTest(optimalTour_filename);
     }
