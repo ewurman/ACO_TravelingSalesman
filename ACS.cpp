@@ -59,6 +59,7 @@ void ACS::search(double maxTime) {
 
 vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, double maxTime){
     vector<double> times (benchmarks.size(), -1);
+    vector<int> counts (benchmarks.size(), 0);
     int benchmarksIndex = 0;
 
     vector<int> heuristicTour = this->nearestNeighborTour();
@@ -76,6 +77,22 @@ vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, d
         for(int j = 0; j < numAnts; j++){
             vector<int> tour = run_tour();
             double tour_eval = this->evaluateTour(tour);
+
+
+            //do the counts
+            bool betterThanAny = false;
+            for (int k = 0; k < benchmarks.size(); k++){
+                if ( tour_eval <= benchmarks[k]*optimalDist){
+                    betterThanAny = true;
+                } else {
+                    if (betterThanAny){
+                        counts[k-1]++;
+                    }
+                    break;
+                }
+            }
+
+
             if (tour_eval < this->bestDistanceSoFar) {
                 bestTourSoFar.swap(tour);
                 this->bestDistanceSoFar = tour_eval;
@@ -91,6 +108,7 @@ vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, d
 
             if (((double) (clock() - startTime ) / (double)CLOCKS_PER_SEC ) > maxTime){
                 times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC);
+                times.insert(times.end(), counts.begin(), counts.end());
                 return times;
             } 
         }
@@ -101,8 +119,12 @@ vector<double> ACS::timedSearch(double optimalDist, vector<double> benchmarks, d
         }
     }
     times.push_back(double( lastImprovement - startTime ) / (double)CLOCKS_PER_SEC); //Our final optimumal time found
+    times.insert(times.end(), counts.begin(), counts.end());
     return times;
 }
+
+
+
 
 
 

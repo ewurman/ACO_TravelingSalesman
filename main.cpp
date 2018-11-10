@@ -56,22 +56,22 @@ int main(int argc, const char * argv[]) {
                 string header = "";
                 string notFound = "-1";
 
-                //string elitistFilename = "a280_Elitist.csv";
-                string elitistFilename = "u574_Elitist.csv";
+                string elitistFilename = "berlin52_Elitist.csv";
+                //string elitistFilename = "u574_Elitist.csv";
                 fstream elitistFile;
                 elitistFile.open(elitistFilename, ios::out);
 
-                //string acsFilename = "a280_ACS.csv";
-                string acsFilename = "u574_ACS.csv";
+                string acsFilename = "berlin52_ACS.csv";
+                //string acsFilename = "u574_ACS.csv";
                 fstream acsFile;
                 acsFile.open(acsFilename, ios::out);
 
-                TSP* tsp = new TSP("TestFiles/u574.tsp");
+                //TSP* tsp = new TSP("TestFiles/u574.tsp");
                 //TSP *tsp = new TSP("TestFiles/a280.tsp");
-                //TSP *tsp = new TSP("TestFiles/berlin52.tsp");
-                double optimalLength = 36905;
+                TSP *tsp = new TSP("TestFiles/berlin52.tsp");
+                //double optimalLength = 36905;
                 //double optimalLength = 2579;
-                //double optimalLength = 7432.85;
+                double optimalLength = 7432.85;
                 
                 //ACOTester baseACOTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
 
@@ -85,7 +85,7 @@ int main(int argc, const char * argv[]) {
                         acoTester= new ACOTester(tsp, ants, iterations, alphas[0], betas[k], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
                         if (k == 0){
                             double firstBenchmark = acoTester->timingBenchmarks[0];
-                            header = to_string(firstBenchmark);
+                            header = to_string(firstBenchmark) + "xOptimal";
                             for (int i = 1; i < acoTester->timingBenchmarks.size(); i++){
                                 header += "," + to_string(acoTester->timingBenchmarks[i]) + "xOptimal";
                             }
@@ -133,13 +133,14 @@ int main(int argc, const char * argv[]) {
                         clock_t endTime = clock();
                         acoTester->resetAlgorithms();
 
-                        elitistFile << timesForBoth.first[0];
-                        acsFile << timesForBoth.second[0];
-                        for (int j = 1; j < acoTester->timingBenchmarks.size(); j++){
+                        int numBenchmarks = acoTester->timingBenchmarks.size();
+                        elitistFile << timesForBoth.first[0]<< ":" << timesForBoth.first[numBenchmarks+1];
+                        acsFile << timesForBoth.second[0] << ":" << timesForBoth.second[numBenchmarks+1];
+                        for (int j = 1; j < numBenchmarks; j++){
                             // ELITIST FILE
                             //if (i < timesForBoth.first.size()){
-                            elitistFile << "," << timesForBoth.first[j];
-                            acsFile << "," << timesForBoth.second[j];
+                            elitistFile << "," << timesForBoth.first[j] << ":" << timesForBoth.first[j+numBenchmarks+1];
+                            acsFile << "," << timesForBoth.second[j] << ":" << timesForBoth.second[j+numBenchmarks+1];
 
                         }
 
@@ -148,9 +149,9 @@ int main(int argc, const char * argv[]) {
 
                         for (int j = 0; j < acoTester->timingBenchmarks.size(); j++){
                             cout << acoTester->timingBenchmarks[j] << " Elitist: ";
-                            cout << timesForBoth.first[j] << " ";
+                            cout << timesForBoth.first[j] <<":"<< timesForBoth.first[j+numBenchmarks+1] << " ";
                             cout << "ACS: ";
-                            cout << timesForBoth.second[j] << " ";
+                            cout << timesForBoth.second[j] <<":"<< timesForBoth.second[j+numBenchmarks+1] << " ";
                             cout << endl;
                         }
                         cout << "Total Time " << (double) (endTime - startTime ) / (double)CLOCKS_PER_SEC << endl;
