@@ -78,7 +78,7 @@ int main(int argc, const char * argv[]) {
                 
                 
 
-                for(int k = 0; k<6; k++){
+                for(int k = 0; k<7; k++){
                     cout << "Starting All tests for k =" << k << endl;
                     ACOTester* acoTester;
                     if (k < 3) {
@@ -108,6 +108,12 @@ int main(int argc, const char * argv[]) {
                         acoTester= new ACOTester(tsp, ants, iterations, alphas[0], betas[0], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);   
                         elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
                         acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[0]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[0]<<",epsilon="<<epsilons[0]<<endl;
+                        
+                    }
+                    else if (k == 4){
+                        acoTester= new ACOTester(tsp, ants, iterations, alphas[0], betas[2], rhos[1], tsp->numCities, q_naughts[0], epsilons[0]);   
+                        elitistFile << "#alpha=" << alphas[0] <<",beta="<<betas[2]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",elitism="<<tsp->numCities<<endl;
+                        acsFile << "#alpha=" << alphas[0] <<",beta="<<betas[2]<<",rho="<<rhos[1]<<",numCities="<<tsp->numCities<<",q_0="<<q_naughts[0]<<",epsilon="<<epsilons[0]<<endl;
                         
                     }
                     else{
