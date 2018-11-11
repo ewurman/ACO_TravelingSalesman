@@ -176,7 +176,7 @@ int main(int argc, const char * argv[]) {
 
                 }
                 else {
-                    ACOTester* acoTester = new ACOTester(tsp, ants, iterations, testAlpha, testBeta, testRho, tsp->numCities, test_q_0, testEpsilon);
+                    ACOTester* acoTester = new ACOTester(tsp, ants, testIterations, testAlpha, testBeta, testRho, tsp->numCities, test_q_0, testEpsilon);
                     double firstBenchmark = acoTester->timingBenchmarks[0];
                     header = to_string(firstBenchmark) + "xOptimal";
                     for (int i = 1; i < acoTester->timingBenchmarks.size(); i++){
