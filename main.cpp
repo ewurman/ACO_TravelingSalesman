@@ -67,12 +67,12 @@ int main(int argc, const char * argv[]) {
                 string header = "";
                 string notFound = "-1";
 
-            string elitistFilename = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/OutputFiles/elitist4461.csv";
+            string elitistFilename = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/OutputFiles/2elitist4461.csv";
                 //string elitistFilename = "u574_Elitist.csv";
                 fstream elitistFile;
                 elitistFile.open(elitistFilename, ios::out);
 
-                string acsFilename = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/OutputFiles/ACS4461.csv";
+                string acsFilename = "/Users/iansquiers/Desktop/NI/ACO_TravelingSalesman/OutputFiles/2ACS4461.csv";
                 //string acsFilename = "u574_ACS.csv";
                 fstream acsFile;
                 acsFile.open(acsFilename, ios::out);
@@ -175,6 +175,9 @@ int main(int argc, const char * argv[]) {
                     }
 
                 }
+            
+            // FINAL TESTING
+            
                 else {
                     ACOTester* acoTester = new ACOTester(tsp, ants, testIterations, testAlpha, testBeta, testRho, tsp->numCities, test_q_0, testEpsilon);
                     double firstBenchmark = acoTester->timingBenchmarks[0];
