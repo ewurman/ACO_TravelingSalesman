@@ -47,7 +47,7 @@ int main(int argc, const char * argv[]) {
         double rhos[] = {0.5, 0.1};
         double q_naughts[] = {0.7, 0.8, 0.9};
         double epsilons[] = {0.1};
-        int iterations = 1000;
+        int iterations = 10000;
 
 
         double testAlpha = 1;
@@ -68,22 +68,25 @@ int main(int argc, const char * argv[]) {
                 string notFound = "-1";
 
                 //string elitistFilename = "u2152_Elitist.csv";
-                string elitistFilename = "rl5915_Elitist.csv";
+                string elitistFilename = "pcb3038_Elitist.csv";
                 fstream elitistFile;
                 elitistFile.open(elitistFilename, ios::out);
 
-                string acsFilename = "rl5915_ACS.csv";
+                string acsFilename = "pcb3038_ACS.csv";
+
                 //string acsFilename = "u574_ACS.csv";
                 fstream acsFile;
                 acsFile.open(acsFilename, ios::out);
 
                 //TSP* tsp = new TSP("TestFiles/u574.tsp");
                 //TSP *tsp = new TSP("TestFiles/a280.tsp");
-                TSP *tsp = new TSP("TestFiles/rl5915.tsp");
+
+                TSP *tsp = new TSP("TestFiles/pcb3038.tsp");
                 //double optimalLength = 36905;
                 //double optimalLength = 2579;
                 //double optimalLength = 7432.85;64253
-                double optimalLength = 565530;
+                double optimalLength = 137694;
+
                 
                 //ACOTester baseACOTester = *new ACOTester(*tsp, ants, iterations, alphas[0], betas[0], rhos[0], tsp->numCities, q_naughts[0], epsilons[0]);
 
@@ -175,6 +178,9 @@ int main(int argc, const char * argv[]) {
                     }
 
                 }
+            
+            // FINAL TESTING
+            
                 else {
                     ACOTester* acoTester = new ACOTester(tsp, ants, testIterations, testAlpha, testBeta, testRho, tsp->numCities, test_q_0, testEpsilon);
                     double firstBenchmark = acoTester->timingBenchmarks[0];

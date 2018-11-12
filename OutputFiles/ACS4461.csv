@@ -1,3 +1,5 @@
 1.400000xOptimal,1.350000xOptimal,1.325000xOptimal,1.300000xOptimal,1.275000xOptimal,1.250000xOptimal,1.225000xOptimal,1.200000xOptimal,1.175000xOptimal,1.150000xOptimal,1.125000xOptimal,1.100000xOptimal,1.075000xOptimal,1.050000xOptimal,1.025000xOptimal,1.000000xOptimal,BestFoundIn,BestResultOptimality
-#Test parameters:
-#alpha=1,beta=5,rho=0.1,numCities=1748,elitism=1748
+#Baseline:
+#alpha=1,beta=5,rho=0.1,numCities=4461,q_0=0.7,epsilon=0.1
+0:3633,0:282,0:6,0:0,0:0,0:0,0:0,-1:0,-1:0,-1:0,-1:0,-1:0,-1:0,-1:0,-1:0,-1:0,0,1.22488
+0:3177,0:220,0:7,0:0,0:0,0:0,0:0,-1:0,-1:0,-1:0,-1:0,-1:0,-1:0,-1:0,-1:0,-1:0,0,1.22488
