@@ -96,20 +96,20 @@ void ACOTester::basicTestTimed(string optimal_filename){
     vector<double> acsTimes = this->acsAlgorithm->timedSearch(optimalDist, this->timingBenchmarks, this->maxTimeSearching);
     vector<int> acsTour = this->acsAlgorithm->getBestTour();
     double acsDist = this->acsAlgorithm->getBestTourDistance();
-    for (int i = 0; i < acsTimes.size() - 1; i++){
+    for (int i = 0; i < timingBenchmarks.size() - 1; i++){
         cout << "ACS found a tour of " << this->timingBenchmarks[i] << " the optimal in " << acsTimes[i] << " seconds" << endl;
     }
-    cout << "ACS found its best tour in " << acsTimes[acsTimes.size() - 1] << " seconds" <<endl;
+    cout << "ACS found its best tour in " << acsTimes[timingBenchmarks.size() - 1] << " seconds" <<endl;
     cout << "ACS Algorithm found a tour of distance " << acsDist << " while the optimal distance was " << optimalDist <<endl;
     cout << "The ACS algorithm got a tour " << acsDist / optimalDist << " times the optimal" << endl;
     
     vector<double> elitistTimes = this->elitistAlgorithm->timedSearch(optimalDist, this->timingBenchmarks, this->maxTimeSearching);
     vector<int> elitistTour = this->elitistAlgorithm->getBestTour();
     double elitistDist = this->elitistAlgorithm->getBestTourDistance();
-    for (int i = 0; i < elitistTimes.size() - 1; i++){
+    for (int i = 0; i < timingBenchmarks.size() - 1; i++){
         cout << "Elitist found a tour of < " << this->timingBenchmarks[i] << " the optimal in " << elitistTimes[i] << " seconds" <<endl;
     }
-    cout << "Elitist found its best tour in " << elitistTimes[elitistTimes.size() - 1] << " seconds" <<endl;
+    cout << "Elitist found its best tour in " << elitistTimes[timingBenchmarks.size() - 1] << " seconds" <<endl;
     cout << "Elitist Algorithm found a tour of distance " << elitistDist << " while the optimal distance was " << optimalDist <<endl;
     cout << "The Elitist algorithm got a tour " << elitistDist / optimalDist << " times the optimal" << endl;
 }
